@@ -1,0 +1,40 @@
+# Secrets / environment
+.env
+.env.local
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Pipeline artifacts (large; regenerated)
+artifacts/
+data/raw/
+data/cache/
+*.h5ad
+*.h5
+*.pkl
+!tests/fixtures/*.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vendored third-party binaries (download separately; see MAXQUANT_SETUP.md)
+tools/ThermoRawFileParser/
+tools/*.zip
+
+# Claude Code local state
+.claude/scheduled_tasks.lock
