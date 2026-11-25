@@ -14,13 +14,13 @@
 \usepackage{balance}
 \usepackage{hyperref}
 
-\journal{ICT Express}
+\journal{CMPB}
 
 \begin{document}
 
 \begin{frontmatter}
 
-\title{Gate-Based Feasibility Analysis for Perturbation-Response Modelling in Stem Cell Differentiation}
+\title{A Control-Paired Gate Framework for Feasibility Analysis of Perturbation-Response Modelling in Stem Cell Differentiation}
 
 
 % \author[kit]{Victor Ikenna Kanu}
@@ -35,25 +35,33 @@
 
 
 \begin{abstract}
-Models predicting cellular response to chemical perturbation are routinely
-benchmarked against baselines, but the assumptions preceding any model are
-rarely tested, and a benchmark conducted afterwards cannot distinguish a poor
-model from an unsupported premise. This work evaluates four such assumptions
-under a protocol in which every statistic and threshold is fixed before
-computation and every negative finding is anchored to a paired control measured through an identical pipeline at identical sample size, so that
-absence of signal is distinguishable from absence of sensitivity. The protocol
-is applied to a population-scale resource of induced pluripotent stem
-cell-derived dopaminergic neurons, a model system for Parkinson's disease drug
-discovery, and three of the four assumptions fail. Donor-level rotenone
-response does not reproduce across independent differentiations (intra-class
-correlation $-0.255$) whereas a developmental phenotype measured identically
-does ($0.817$); a canonical marker composite is insensitive to a perturbation
-its own components register clearly; and structural similarity predicts
-transcriptional response among near-analogues but not across mechanistic
-classes ($\Gamma = 0.0128$), though mechanistic class is itself coherent in
-response space. The transferable gene space is 35 genes rather than the several
-hundred permissive thresholds imply. Each failure constrains a specific design
-decision, and the protocol is independent of the case examined.
+Biomedical prediction models are often developed before testing whether the
+underlying data satisfy the assumptions required for the modelling task. This
+study introduces a control-paired gate framework for evaluating such
+assumptions before model development. Each gate specifies a statistic,
+pre-defined decision threshold, and paired control measured through an
+identical analytical pipeline and at the same sample size, allowing absence of
+signal to be distinguished from insufficient analytical sensitivity. The
+framework evaluates four prerequisites for perturbation-response modelling:
+response reproducibility, prediction-target sensitivity, transferable
+measurement space, and informativeness of the conditioning signal. We
+demonstrate the approach using population-scale induced pluripotent stem
+cell-derived dopaminergic neuron data relevant to Parkinson's disease drug
+discovery. Three of the four assumptions fail. Donor-level rotenone response
+does not reproduce across independent differentiations
+(intra-class correlation $=-0.255$), whereas a developmental phenotype
+measured through the same pipeline reproduces strongly ($0.817$). A canonical
+dopaminergic marker composite is insensitive to perturbation because opposing
+gene-level responses cancel during aggregation. The transferable
+perturbation-response space is reduced to 35 genes under biologically and
+analytically constrained filtering. Structural similarity shows negligible
+global coupling with transcriptional response ($\Gamma=0.0128$), despite
+coherent responses within mechanistic classes and stronger associations among
+near-analogues. These results constrain donor-resolved prediction,
+marker-composite targets, and structure-conditioned generalisation in the
+examined system. More broadly, the proposed framework provides a reproducible
+computational procedure for determining whether biomedical prediction tasks
+are supported by the available data before model selection and training.
 \end{abstract}
 
 \begin{keyword}
@@ -696,21 +704,6 @@ observed estimate.
   \end{minipage}
 \end{table*}
 
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.99\linewidth]{images/fig2_replicate_scatter.png}
-  \caption{Replicate-pair reproducibility for the perturbation response (a) and
-  the differentiation-efficiency control (b), on a shared scale with the
-  identity line marked. Each point is one donor differentiated in two distinct
-  pools; axes are $z$-scored within metric. The control occupies a tight
-  diagonal ($\rho_\mathrm{I}=0.817$) while the response forms an uncorrelated
-  cloud ($\rho_\mathrm{I}=-0.255$), at identical $n=21$ donors and through an
-  identical pipeline. The contrast establishes that the absence of
-  reproducibility in (a) reflects the phenotype rather than the sensitivity of
-  the procedure.}
-  \label{fig:scatter}
-\end{figure}
-
 
 
 \subsection{\textbf{Reproducibility and pre-specification record}}
@@ -816,6 +809,21 @@ dopaminergic label ($10{,}947$ untreated, $5{,}055$ rotenone-treated).
   \end{minipage}
 \end{table*}
 
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.99\linewidth]{images/fig2_replicate_scatter.png}
+  \caption{Replicate-pair reproducibility for the perturbation response (a) and
+  the differentiation-efficiency control (b), on a shared scale with the
+  identity line marked. Each point is one donor differentiated in two distinct
+  pools; axes are $z$-scored within metric. The control occupies a tight
+  diagonal ($\rho_\mathrm{I}=0.817$) while the response forms an uncorrelated
+  cloud ($\rho_\mathrm{I}=-0.255$), at identical $n=21$ donors and through an
+  identical pipeline. The contrast establishes that the absence of
+  reproducibility in (a) reflects the phenotype rather than the sensitivity of
+  the procedure.}
+  \label{fig:scatter}
+\end{figure}
 
 Table~\ref{tab:repro} and Figure~\ref{fig:scatter} report reproducibility for
 the perturbation response and for the control, measured on identical units.
