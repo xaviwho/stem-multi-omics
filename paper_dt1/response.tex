@@ -1,0 +1,563 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=0.85in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cite}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage[article]{ragged2e}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+% initialize counters for reviewer number and comment number
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+\renewcommand{\thetable}{\Roman{table}}
+\setcounter{table}{0}
+\captionsetup[table]{skip=8pt}
+% Set the format of reviewer comment numbers and responses.
+\renewcommand{\thepoint}{Review\,\thereviewer.\arabic{point}} 
+\newcommand{\point}[1]{\refstepcounter{point}  \bigskip \hrule \medskip \noindent \textit{{\fontseries{b}\selectfont \thepoint } #1}\par}
+\newcommand{\reply}{\medskip \noindent \textbf{Reply}:\ }   
+
+% Set the format for reviewer headings
+\newcommand{\reviewersection}{\stepcounter{reviewer}
+                  \section*{To Reviewer \#\thereviewer}}
+                  
+% Set the format for reviewer headings
+\newcommand{\editorsection}{\section*{To Associate Editor}}
+
+%Table Space
+\newcommand\T{\rule{0pt}{2.5ex}}       % Top strut
+\newcommand\B{\rule[-1.3ex]{0pt}{0pt}} % Bottom strut
+
+
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!80!black},
+    citecolor={blue!80!black},
+    urlcolor={blue!80!black}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{OrBIT: Orchestrated Hybrid-Blockchain Twins for Verifiable Privacy-Preserving Provenance \\ (Paper Number: IOT-D-26-03176 )}
+\author{}
+\begin{document}
+
+\maketitle
+
+\vspace{10 pt}
+
+\newpage
+\editorsection
+\justifying
+Thank you for the careful and constructive assessment of manuscript IOT-D-26-03176. We have completed a major revision in response to every point raised by Reviewers~1 and~2. Each comment is reproduced verbatim below, followed by a direct response, the supporting evidence, and the corresponding revised manuscript material. To make the response self-contained, we reproduce the relevant revised passages, algorithms, tables, and figures here; the reviewer does not need to search the manuscript to verify what changed. All material inserted or substantively rewritten in the manuscript is shown in \textcolor{blue}{blue}. Table~\ref{edited} summarises the principal changes.
+
+ \begin{table}[!thbp]
+    \caption{Summary of major differences between the submitted and revised manuscripts.}
+    \label{edited}
+    \centering
+    \begin{tabular}{l|c|c}
+    \hline\hline
+    Manuscript element & Submitted & Revised\T\B\\ \hline\hline
+        Number of Figures                      & 7 &  10 \T\B\\\hline
+        Number of Tables                            & 7 & 4     \T\B\\\hline
+
+        Number of References                               & 17 &   28 \T\B\\ \hline\hline
+    \multicolumn{2}{l}{\parbox{3.3in}{}}
+    \end{tabular}
+    \vspace{-4mm}
+    \end{table}
+\newpage
+\reviewersection
+
+We thank the reviewer for identifying limitations in the original experimental
+design and for requesting stronger evidence on distribution, relay fault
+tolerance, and comparison baselines. These comments motivated the new cloud
+deployment and most of the additional experiments in the revision.
+
+\point{The entire empirical evaluation, including Hyperledger Fabric consensus,
+the local Ethereum RPC, and the orchestrator, was conducted on a single 4-core
+machine running development WSGI servers. This completely masks the actual
+network latency, multi-organization endorsement overhead, and Byzantine fault
+conditions that define real-world distributed ledger deployments, rendering the
+throughput and latency claims practically meaningless. Please deploy and
+benchmark the architecture across a geographically distributed, multi-node
+cloud environment with realistic network delays and production-grade
+application servers.}
+
+\reply{We agree that the original single-host deployment could not support
+claims about distributed-ledger latency. We therefore rebuilt the evaluation on
+four Azure virtual machines spanning Korea Central and Japan East. The revised
+network separates the orchestrator/client, two Fabric peer organisations and
+their CouchDB instances, and the ordering/public-ledger services. Fabric uses an
+\texttt{AND(Org1,Org2)} endorsement policy, and the Flask services run behind
+Gunicorn. We also retained the original host only for a controlled
+Werkzeug-versus-Gunicorn experiment, which showed that changing the WSGI server
+alone did not materially change throughput; Fabric ordering and commit remained
+the dominant cost.
+
+The new experiments include controlled 0--100\,ms added round-trip delay,
+\texttt{MaxMessageCount} and \texttt{BatchTimeout} sweeps, separate endorsement
+and commit-stage measurements, and five repetitions per configuration. The
+base distributed run exhibited acknowledgement floors of 2637.5--2664.9\,ms
+and a transition at $c=10$, while reducing
+\texttt{MaxMessageCount} to 5 moved the detected transition to $c=5$. A stage
+probe measured 319.58\,ms for endorsement/submission and 1742.67\,ms for
+ordering/commit.
+
+We could not responsibly claim Byzantine-fault evaluation. The deployed Fabric
+v2.5 network uses a single Raft consenter, whereas a Byzantine-ordering
+experiment requires migration to Fabric v3 and at least four orderers. We now
+state this limitation explicitly throughout the results, limitations, and
+conclusion. Thus, the geographic, multi-organisation, delay, and
+production-server portions of the request are fully addressed; Byzantine
+ordering is transparently reported as not run.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Experimental Setup, Ledger and
+Network Configuration, and Results and Discussion):}
+
+\textcolor{blue}{The OrBIT evaluation uses four Azure virtual machines distributed across Korea Central and Japan East. The client/orchestrator host, an Org1 peer with CouchDB, an Org2 peer with CouchDB, and the ordering/public-ledger host are separated at VM and regional boundaries. Hyperledger Fabric~v2.5 enforces \texttt{AND(Org1,Org2)} endorsement, so every accepted update crosses both administrative organisations and regions before ordering and validation. The public audit layer is a dedicated Ganache JSON-RPC service with one Solidity registry deployment. The Flask applications run behind Gunicorn production WSGI workers; the orchestrator reaches Fabric through the \texttt{peer} CLI and Ethereum through \texttt{web3.py}. Table~\ref{tab:env} summarises the testbed.}
+
+\textcolor{blue}{The original single-host deployment is retained only as a controlled server-mode experiment. Five paired repetitions at each concurrency level compare Werkzeug and Gunicorn with identical ledger state and payloads. The production/development throughput ratios below the block-cut threshold are 0.985, 0.994, 0.994, and 1.001 for the four fixtures, and no per-level 95\% confidence interval excludes one. We therefore do not attribute the revised cloud results to WSGI substitution alone; the distributed Fabric commit path remains dominant.}
+
+\textbf{Reproducibility.} \textcolor{blue}{Each cloud configuration was repeated five times. Raw request, stage, queue, receipt, fault, and audit records are retained before consolidation. The build validates schema, repetition count, transaction-address consistency, throughput/latency reconciliation, anchor counts, and provenance, and rejects a metric if a gate fails. The consolidated artifact contains 343 metrics (242 measured and 101 derived) and no validation errors; Fabric~3 Byzantine ordering is recorded as \texttt{NOT\_RUN}, not silently omitted.}
+
+\begin{table}[!htbp]
+\centering
+\caption{\textcolor{blue}{Experimental environment and configuration summary reproduced from the revised manuscript.}}
+\label{tab:env}
+\renewcommand{\arraystretch}{1.05}
+\setlength{\tabcolsep}{4pt}
+\scriptsize
+\begin{tabular}{@{}p{0.25\textwidth}p{0.67\textwidth}@{}}
+\toprule
+\textbf{Component} & \textbf{Configuration / Version} \\ \midrule
+\textcolor{blue}{Cloud topology} & \textcolor{blue}{4 Azure VMs; Korea Central + Japan East} \\
+Containerization & Docker + Compose \\
+\textcolor{blue}{Private ledger} & \textcolor{blue}{Fabric~v2.5; 2 peer orgs; \texttt{AND(Org1,Org2)}} \\
+Orderer batching & \texttt{BatchTimeout} 2\,s; \texttt{MaxMessageCount} 10 \\
+State database & CouchDB (world and index state) \\
+\textcolor{blue}{Public ledger} & \textcolor{blue}{Dedicated Ganache JSON-RPC VM (chain id 1337)} \\
+Smart contracts & Go (Fabric), Solidity~0.8.20 (Ethereum) \\
+\textcolor{blue}{Orchestrator} & \textcolor{blue}{Python~3.10 + Flask behind Gunicorn} \\
+Fabric access & \texttt{peer} CLI (channel \texttt{hiot}, chaincode \texttt{iot-data}) \\
+Ethereum access & \texttt{web3.py} \\
+Privacy routing & Deterministic policy engine (HIPAA/GDPR/PCI) \\
+\textcolor{blue}{Outbox / relay} & \textcolor{blue}{Durable store; $k=1,2,3$ relays; lease and race modes} \\
+\textcolor{blue}{Fault injection} & \textcolor{blue}{4 crash points; tamper, withholding, reconciliation} \\
+Workload & Deterministic synthetic telemetry \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textcolor{blue}{The Fabric network comprised two endorsing peer organisations on different Azure VMs and regions, plus a separate ordering node running single-consenter Raft, with channel \texttt{hiot} and the \texttt{iot-data} chaincode installed, approved, and committed by both organisations. The channel policy required \texttt{AND(Org1,Org2)}; thus each write collected both endorsements before submission and subsequently incurred ordering, validation, and CouchDB persistence. A stage probe measured 319.58\,ms for endorsement and submission, 1742.67\,ms for ordering and commit, and 2062.25\,ms end to end.}
+
+\textcolor{blue}{The base ordering policy used a 2\,s timeout and $B_{\max}=10$. Controlled sweeps additionally set $B_{\max}\in\{5,20\}$ and the timeout to 0.5, 1, or 2\,s. Delay experiments inserted 0, 10, 25, or 50\,ms on each relevant direction, corresponding to 0, 20, 50, or 100\,ms added round-trip delay. At the few-hundred-byte record size, byte ceilings do not bind, so count and timeout isolate the block-cut mechanism.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{images/fig5_orchestration_v2.pdf}
+\caption{\textcolor{blue}{Multi-region orchestration performance over five repetitions per point. The figure reports acknowledgement latency and throughput for all four routing fixtures on the Azure deployment; the base block-cut boundary is $c=10$. Error bars show between-repetition variation.}}
+\label{fig:c1_panel}
+\end{figure}
+
+\textcolor{blue}{\textbf{Geographically distributed baseline.} Figure~\ref{fig:c1_panel}(a) reports throughput and Figure~\ref{fig:c1_panel}(b) reports acknowledgement latency for the same four routing fixtures. In the base Azure configuration, the acknowledgement floors were 2637.5, 2664.9, 2654.2, and 2653.8\,ms for all-public, all-sensitive, mixed, and Fabric-only records, respectively. Both panels show a common regime transition at $c=10$, matching $B_{\max}=10$: throughput rises to 9.09--9.32\,TPS while acknowledgement latency falls sharply as requests begin filling blocks before the timeout. Because the transition occurs for both anchoring and non-anchoring fixtures, the evidence attributes it to Fabric block cutting rather than to the public-ledger path. The stage probe further attributes 319.58\,ms to endorsement/submission and 1742.67\,ms to ordering/commit within the 2062.25\,ms full Fabric operation, directly measuring the cross-organisation overhead that the original single-host evaluation could not expose.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{images/fig_blockcut_sweep.pdf}
+\caption{\textcolor{blue}{Controlled ordering-policy sweep on the multi-region deployment. Reducing \texttt{MaxMessageCount} from 10 to 5 moves the detected transition from $c=10$ to $c=5$ for both mixed and Fabric-only traffic. No detector-confirmed transition is claimed for every configuration outside the sampled concurrency range.}}
+\label{fig:blockcut_v2}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{images/fig_delay_sweep.pdf}
+\caption{\textcolor{blue}{Acknowledgement floor under 0, 20, 50, and 100\,ms added round-trip delay. Both routing paths show approximately linear amplification because one logical Fabric commit traverses multiple sequential network exchanges.}}
+\label{fig:delay_v2}
+\end{figure}
+
+\textcolor{blue}{\textbf{Block cutting and network delay.} Figure~\ref{fig:blockcut_v2}(a) tests whether the latency transition follows the configured message-count policy. With $B_{\max}=5$, the transition moved to $c=5$ for both tested fixtures, again matching the block-cut model; the base $B_{\max}=10$ cases transitioned at ten. The $B_{\max}=20$ sweep did not yield a detector-confirmed transition at every sampled level, so its floor and peak are reported without extrapolating a threshold. Figure~\ref{fig:blockcut_v2}(b) isolates the timeout term: reducing the timeout from 2 to 1 and 0.5\,s lowers the Fabric-only $c=1$ floor from 2653.8 to 1647.5 and 1132.2\,ms. Figure~\ref{fig:delay_v2}(a) then shows the full concurrency curves under 0--100\,ms added round-trip delay, while Figure~\ref{fig:delay_v2}(b) fits the $c=1$ floors. The least-squares slopes are 24.29 and 24.58\,ms of acknowledgement latency per added millisecond of round-trip delay for Fabric-only and mixed traffic. This amplification is consistent with roughly 24 sequential network-dependent exchanges in the CLI-mediated Fabric path and identifies a concrete optimisation target: a persistent gateway that avoids repeated process and protocol setup.}
+
+\textcolor{blue}{The multi-region results support five bounded conclusions. First, production WSGI serving does not materially change throughput on the controlled host; the cross-region Fabric commit path dominates. Second, the observed block-cut transition follows \texttt{MaxMessageCount}: $c^*=10$ in the base configuration and $c^*=5$ after setting the limit to five. Third, asynchronous anchoring improves the one-client acknowledgement from 3082.0 to 2628.1\,ms relative to synchronous anchoring and scales to 9.05\,TPS at $c=32$ in the tested range. Fourth, lease-coordinated relays tolerate the injected crash points with one anchor per record and no wasted gas, while an independent auditor detects all tested tampering and withholding and reconciliation repairs all 150 injected crash-window orphans. Fifth, the original privacy, gas, storage, and recovery claims persist: zero sensitive-field leakage, 99.5\% gas reduction at $N=200$, 4.013$\times$ sparse-history storage reduction, and 0.111--0.325\,ms rollback.}
+
+\textcolor{blue}{\textbf{Scope boundary.} The deployed ordering service has one Raft consenter and therefore tolerates no orderer failure. Fabric~3 Byzantine ordering would require a full network migration and at least four suitably provisioned orderers; it was not run under the available quota. The evidence supports geographic distribution, multi-organisation endorsement, and controlled network-delay analysis, but not Byzantine ordering.}
+\medskip
+
+\point{The architecture relies heavily on a centralized ``Orchestrator'' and a
+single-threaded ``Relay Worker'' to guarantee exactly-once delivery between the
+private and public ledgers. Centralizing the cross-chain synchronization
+eliminates the decentralized trust assumption of the digital twin ecosystem,
+introducing a critical single point of failure that compromises the promised
+end-to-end immutability. Please replace the centralized relay with a
+decentralized oracle network or a cryptographically secure cross-chain bridge
+protocol, and formally evaluate its fault tolerance.}
+
+\reply{We agree with the underlying concern and have removed the unsupported
+implication that a single relay provides decentralised or trustless bridge
+security. We did not replace OrBIT with an external oracle network because that
+would change the system's trust, validator, incentive, and finality models rather
+than test the contribution under review. Instead, we made the actual permissioned
+relay design fault tolerant and its trust boundary explicit.
+
+The revised implementation supports $k\in\{1,2,3\}$ independently restartable
+relay processes with separate Ethereum accounts. We compare atomic lease-based
+coordination against an uncoordinated race mode and preserve the on-chain
+identifier-uniqueness check as the final exactly-once safety boundary. We added
+fault injection at mid-poll, after broadcast, after receipt, and by
+\texttt{SIGKILL}. In every lease-coordinated case, anchors equalled records,
+duplicate anchors and reverted transactions were zero, and delivery recovered
+after lease expiry. The independent auditor detected all commitment-tampering
+and withholding trials. A separate crash-window experiment created 150 private
+ledger orphans; reconciliation found and repaired all 150, after which all 150
+anchors passed audit.
+
+These tests establish crash-fault tolerance and externally detectable
+cross-ledger integrity. They do not establish Byzantine relay consensus or a
+trustless bridge, and the revised manuscript now says so explicitly. A
+decentralised oracle or light-client bridge can consume the same commitment and
+outbox interface and is identified as future comparative work.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Orchestrator Integration Layer,
+Algorithm~1, Fault-Tolerance Evaluation, Limitations, and Conclusion):}
+
+\textcolor{blue}{OrBIT does not claim to replace a decentralised oracle or trustless bridge. Its relay workers are permissioned operational agents: leases prevent redundant submissions, while the Fabric record, Ethereum identifier uniqueness, and an independent auditor make omission or alteration detectable. A decentralised oracle network could consume the same outbox and commitment protocol, but would introduce a different validator and incentive model that is outside the present evaluation.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.86\textwidth]{images/Fig 3.png}
+\caption{\textcolor{blue}{Detailed orchestration sequence and consistency protocol. Exactly-once delivery is ensured by an idempotency check before processing. The client is acknowledged immediately after the private Fabric commit, decoupling slower public anchoring into an asynchronous background process through the transactional-outbox pattern. Routing is determined by the deterministic policy engine, which returns each field's sensitivity level and legal basis rather than a probabilistic classification.}}
+\label{fig:orbit_sequence}
+\end{figure}
+
+\textcolor{blue}{Public anchoring is decoupled from the ingestion path via the transactional outbox. One or more independently restartable relay processes poll pending events. In the coordinated mode evaluated here, a relay atomically acquires a time-bounded lease before submitting an event; an expired lease makes abandoned work eligible for another process. The winning relay registers the commitment on Ethereum and records the receipt (Fig.~\ref{fig:orbit_sequence}), while transient failures are retried with exponential backoff. Confirmation monitoring proceeds independently until the required block depth is observed. The lease prevents redundant transactions during normal operation but is not itself the safety boundary.}
+
+\textcolor{blue}{Exactly-once \emph{effects} arise from three mechanisms acting together. The outbox key prevents duplicate enqueueing; relay leases allocate pending work without relying on one continuously available process; and the on-chain uniqueness check closes the crash window between transaction broadcast and receipt persistence. A restarted relay first queries the registry and treats an already-registered identifier as successful delivery. At-least-once delivery composed with on-chain uniqueness therefore yields one public effect for every publishable identifier.}
+
+\textcolor{blue}{Hyperledger Fabric and the local outbox store cannot participate in a common transaction, so the private commit and outbox insertion are ordered rather than atomic: Fabric commit, then outbox row and deduplication record in one local transaction, then acknowledgement. A crash in the intervening window can leave a privately committed record without an outbox row. We do not claim cross-ledger atomicity. A reconciliation sweep enumerates Fabric records, compares them with the deduplication and outbox tables, recreates missing intents, and lets the ordinary lease protocol deliver them. A standalone auditor recomputes each commitment from Fabric state and compares the result with the Ethereum registry, thereby detecting both alteration and withholding independently of the relay process.}
+
+\begin{algorithm}[!htbp]
+\scriptsize
+\caption{\textcolor{blue}{Pseudocode for lease-coordinated relay delivery and reconciliation}}
+\label{alg:relay}
+\KwData{\textcolor{blue}{Durable outbox $\mathcal{O}$; relay identifier $r$; lease duration $\ell$; Fabric records $\mathcal{F}$; Ethereum registry $\mathcal{M}$}}
+\KwResult{\textcolor{blue}{One durable public effect for every publishable committed record}}
+\While{\textcolor{blue}{relay $r$ is running}}{
+  \textcolor{blue}{Atomically claim one pending or expired row $o\in\mathcal{O}$ until $t+\ell$}\;
+  \If{\textcolor{blue}{no row is claimable}}{\textcolor{blue}{wait with backoff; continue}\;}
+  \If{\textcolor{blue}{$\mathcal{M}$ already contains $o.\mathtt{id}$}}{
+    \textcolor{blue}{mark $o$ delivered and persist the observed receipt}\;
+  }
+  \Else{
+    \textcolor{blue}{submit $\langle o.\mathtt{id},o.\mathtt{commitment}\rangle$ to Ethereum}\;
+    \textcolor{blue}{persist the receipt; mark $o$ delivered}\;
+  }
+}
+\ForEach{\textcolor{blue}{$f\in\mathcal{F}$ during reconciliation}}{
+  \If{\textcolor{blue}{$f$ is publishable and has no outbox intent}}{
+    \textcolor{blue}{recompute and insert the missing intent idempotently}\;
+  }
+}
+\textcolor{blue}{Audit by recomputing each Fabric commitment and comparing it with $\mathcal{M}$}\;
+\end{algorithm}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{images/fig_mu_relay.pdf}
+\caption{\textcolor{blue}{Measured relay drain rate by worker count and offered load: (a) lease coordination and (b) uncoordinated race mode. Error bars are 95\% confidence intervals over five repetitions. Race mode was sampled only at offered rates of 8 and 16 rows/s.}}
+\label{fig:relay_v2}
+\end{figure}
+
+\textcolor{blue}{\textbf{Multi-relay capacity.} Figure~\ref{fig:relay_v2}(a) reports lease-coordinated drain rates and Figure~\ref{fig:relay_v2}(b) reports the uncoordinated race control; each panel separates $k=1,2,3$ relays and shows 95\% confidence intervals. Lease coordination sustains 1.999--3.961 anchors/s across the sampled loads and consumes zero gas on redundant transactions. Race mode was measured only at the saturated offered rates shown in panel~(b), where it reaches 5.222--5.668 anchors/s but generates reverted transactions and substantial wasted gas; it is therefore a throughput-oriented negative control, not a safe design. Queue p95 remains below 58\,ms when offered load does not exceed service capacity and grows to tens or hundreds of seconds once arrival rate exceeds relay service rate.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{images/fig_fault_injection.pdf}
+\caption{\textcolor{blue}{Relay fault injection over five repetitions per configuration: (a) mean end-to-end recovery time with 95\% confidence intervals and (b) reverted transactions in uncoordinated race mode. Contract event logs confirmed anchors equal to records and zero duplicate anchors in all 16 configurations; lease mode incurred zero reverts throughout.}}
+\label{fig:fault_v2}
+\end{figure}
+
+\textcolor{blue}{Figure~\ref{fig:fault_v2}(a) reports end-to-end recovery time, including 95\% confidence intervals, for the four crash points and both $k=2,3$ relay configurations. Recovery means span 16.56--29.27\,s; the wide interval for the $k=3$ race \texttt{SIGKILL} case is retained rather than hidden. Across all 16 configurations, contract event logs show anchors equal to records and zero duplicate anchors. Figure~\ref{fig:fault_v2}(b) exposes the efficiency difference: lease coordination produces zero reverted transactions at every crash point, whereas race mode produces 13--27 reverts for $k=2$ and 180--244 for $k=3$. The independent auditor additionally detected 100\% of commitment-tampering and withholding trials, and all withheld records were repaired. A separate crash-window sweep created 150 private-ledger orphans; reconciliation detected and repaired all 150, after which all 150 anchors passed audit. These results establish crash-fault tolerance and detectable end-to-end integrity without assuming that a particular relay remains alive.}
+
+\textcolor{blue}{The evidence supports crash-fault-tolerant relay coordination, not Byzantine consensus or a trustless cross-chain bridge. Future work will compare the same commitment interface with decentralised oracle and light-client bridge back ends.}
+\medskip
+
+\point{The baseline comparisons are glaringly insular, evaluating OrBIT's
+hybrid routing exclusively against its own ``Fabric-only'' ablation rather than
+competing state-of-the-art hybrid twin architectures or federated cross-chain
+protocols. While the theoretical integration of immutable public anchoring with
+private state management is sound, treating a centralized, single-threaded
+Python relay as a cross-chain bridge represents a regression relative to
+decentralized oracle networks or trustless relay models that are standard in
+contemporary blockchain literature. Check them for improvement:
+\nolinkurl{10.1109/TCE.2026.3660345},
+\nolinkurl{10.1038/s41598-026-46244-z}, and
+\nolinkurl{10.1109/TCE.2026.3702497}.}
+
+\reply{We expanded both the literature analysis and the experimental baselines.
+The three suggested papers are now cited and discussed individually. They address
+federated predictive digital twins, privacy-preserving medical-image learning,
+and neural-cryptographic health-data exchange. They are relevant neighbouring
+systems, but they do not expose the same dependent variables as OrBIT's
+Fabric-to-Ethereum commit protocol; using their prediction accuracy or model
+cost as a throughput baseline would therefore be methodologically invalid.
+
+To make an experimentally controlled comparison, we added three protocol modes
+with identical payloads and ledger topology: \texttt{FABRIC\_ONLY},
+\texttt{SYNC\_ANCHOR}, and OrBIT's \texttt{ASYNC\_OUTBOX}. We also compare
+lease-coordinated relays with uncoordinated race relays. At $c=32$, synchronous
+anchoring reached 2.73\,TPS, whereas asynchronous and Fabric-only modes reached
+9.05 and 9.09\,TPS, respectively. The manuscript now distinguishes this
+permissioned, auditable delivery mechanism from oracle or trustless-bridge
+consensus and avoids presenting the relay as a decentralised bridge.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Related Works and Baseline Comparisons):}
+
+\textcolor{blue}{The three additional works suggested during review occupy adjacent rather than directly competing layers. CardioTwin-XAI builds a federated predictive digital twin for cardiovascular care; FedLiverNet protects collaborative liver-image learning; and NeuroShield-Diabetes applies neural cryptography to health-data exchange. They provide application- or model-level privacy mechanisms but do not specify a Fabric-to-Ethereum commit protocol, relay coordination rule, or comparable end-to-end ledger workload. Treating their predictive accuracy or cryptographic cost as an OrBIT throughput baseline would therefore compare different dependent variables. We instead use three protocol-level baselines: Fabric-only ingestion, synchronous public anchoring, and uncoordinated race relays, with identical payloads and ledger topology.}
+
+\textcolor{blue}{OrBIT does not claim to replace a decentralised oracle or trustless bridge. Its relay workers are permissioned operational agents: leases prevent redundant submissions, while the Fabric record, Ethereum identifier uniqueness, and an independent auditor make omission or alteration detectable. A decentralised oracle network could consume the same outbox and commitment protocol, but would introduce a different validator and incentive model that is outside the present evaluation.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{images/fig_sync_vs_async.pdf}
+\caption{\textcolor{blue}{Synchronous anchor, asynchronous outbox, and Fabric-only baselines on the same distributed topology. Decoupling reduces acknowledgement latency and avoids the public call becoming the ingestion throughput ceiling.}}
+\label{fig:sync_async_v2}
+\end{figure}
+
+\textcolor{blue}{\textbf{Protocol baselines.} Figure~\ref{fig:sync_async_v2}(a) compares acknowledgement latency and Figure~\ref{fig:sync_async_v2}(b) compares throughput for the three modes on the same topology and workload. At one client, synchronous anchoring produced a 3082.0\,ms acknowledgement and 0.324\,TPS, compared with 2628.1\,ms and 0.380\,TPS for the asynchronous outbox; asynchronous completion, including the anchor, was 3171.7\,ms. Above the block-cut boundary, panel~(a) shows synchronous acknowledgement latency continuing to grow while asynchronous and Fabric-only latency remain close. Correspondingly, at $c=32$ in panel~(b), synchronous throughput remains 2.73\,TPS whereas asynchronous and Fabric-only throughput reach 9.05 and 9.09\,TPS. Thus the outbox moves public-chain work out of the response path without pretending that the work disappears: it remains visible in completion latency and queue age.}
+
+\textcolor{blue}{The relay comparison in Figures~\ref{fig:relay_v2} and~\ref{fig:fault_v2} supplies the second controlled baseline. Uncoordinated race relays can attain a higher drain rate under saturation, but they generate reverted transactions and waste gas; lease coordination gives one durable anchor per record with no redundant gas expenditure across the injected crash points.}
+\medskip
+
+\reviewersection
+
+We thank the reviewer for recognising the relevance and organisation of the
+work and for the concrete suggestions on motivation, algorithms, presentation,
+language, and recent literature. All five requested revisions have been made.
+
+\point{Problem of paper and motivation is not clear in introduction.}
+
+\reply{We rewrote the opening of the Introduction to state the engineering
+problem before introducing the solution. It now identifies three coupled risks:
+disclosure of regulated fields, duplicate or missing cross-ledger effects after
+retries or crashes, and public-chain delay on the ingestion path. We also
+rewrote the contribution list so that every contribution identifies both a
+mechanism and a verifiable outcome.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Introduction and Contributions):}
+
+\textcolor{blue}{Mission-critical Internet of Things (IoT) systems, including aerospace control networks, medical infrastructure, and industrial automation, require continuous data exchange between physical assets and their digital counterparts that is verifiable, private, and fault-resilient. The central problem is not merely where to store digital-twin records, but how to coordinate one private and one public ledger without (i) disclosing regulated fields, (ii) producing duplicate or missing cross-ledger effects after retries and crashes, or (iii) placing public-chain delay on the ingestion critical path. Digital twins facilitate real-time monitoring, enhanced collaboration, and analytics-driven decision support throughout asset lifecycles. However, their deployment is often hindered by fragmented data flows, limited interoperability, and inadequate traceability.}
+
+\textcolor{blue}{Mission-critical digital-twin ecosystems face three coupled security and reliability challenges: (i) data exposure across heterogeneous ledgers, which risks leaking confidential operational parameters to public networks; (ii) non-deterministic or duplicate transaction commits, which undermine consistency in multi-ledger environments; and (iii) the transaction cost of verifiable public anchoring, which limits scalability under continuous telemetry flow. These concerns are operationally inseparable: a privacy decision controls the public effect, a crash can interrupt that effect after the private commit, and a slow public confirmation can delay clients unless coordination is explicitly asynchronous. We therefore ask whether deterministic routing prevents leakage, whether idempotent multi-relay delivery preserves exactly-once effects under crashes, and which ledger stage bounds latency in a geographically distributed deployment. Existing digital-twin blockchain frameworks improve traceability but fail to address these issues holistically, often treating blockchain as a static storage backend rather than an orchestrated execution layer.}
+
+\textcolor{blue}{The key contributions of this paper are as follows:}
+\begin{enumerate}
+\item \textcolor{blue}{We propose a unified hybrid-ledger architecture combining Hyperledger Fabric for private state management with Ethereum for public anchoring, treating blockchain provenance as an active control primitive. Anchoring is decoupled from ingestion by a transactional outbox, and exactly-once effects follow from composing an idempotency-keyed outbox, lease-coordinated relay workers, and an on-chain uniqueness check.}
+\item \textcolor{blue}{We design a deterministic, fail-closed privacy-routing policy grounded in established data-protection standards (HIPAA, GDPR, and PCI-DSS) that governs which fields may be written to the immutable public ledger. Because the decision is made by construction rather than by a probabilistic classifier, no field above the publication threshold can reach the public ledger, yielding a provable, auditable privacy guarantee rather than an estimated one.}
+\item \textcolor{blue}{We establish a mathematically defined lifecycle model with verifiable, append-only state transitions and integrity-checked rollback cryptographically bound to blockchain provenance, persisting history as reversible deltas with periodic checkpoints so that recovery cost is bounded by the checkpoint interval rather than by history depth.}
+\item \textcolor{blue}{We validate the architecture on four cloud VMs in two geographic regions under production WSGI serving, two-organisation endorsement, controlled delay, block-cutting sweeps, synchronous and Fabric-only baselines, competing relay-coordination modes, four crash points, tampering, withholding, and reconciliation.}
+\end{enumerate}
+\textcolor{blue}{The measurements locate the dominant acknowledgement cost in Fabric ordering and quantify, rather than conceal, the remaining trust boundary: relay crashes are tolerated and externally auditable, whereas Byzantine ordering was not evaluated.}
+\medskip
+
+\point{Algorithm is discussed but no pseudo code is added for ease of readers.}
+
+\reply{We added three numbered pseudocode algorithms covering the paper's core
+procedures: (1) lease-coordinated relay delivery and reconciliation,
+(2) deterministic policy-driven routing and commit, and (3) digital-twin
+version commit and rollback. The surrounding text now refers to each algorithm
+at the point where its inputs, safety condition, and output are introduced.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Algorithms~1--3):}
+
+Algorithm~\ref{alg:relay}, reproduced under our response to Review~1.2, specifies lease acquisition, on-chain uniqueness, receipt recovery, and reconciliation. The other two newly added algorithms are reproduced below.
+
+\begin{algorithm}[!htbp]
+\scriptsize
+\color{blue}
+\caption{Pseudocode for deterministic policy-driven routing and commit}
+\label{alg:routing}
+\KwData{Incoming payload $\mathbf{x}=\{(k_j,v_j)\}$; arrival time $t_0$; name rules $\mathcal{R}_{\mathrm{name}}$; value rules $\mathcal{R}_{\mathrm{val}}$; publication threshold $\theta$}
+\KwResult{Ledger commit confirmation; client notification; routing path}
+Initialize deduplication store $\mathcal{D}$, outbox $\mathcal{O}$, ledger connections\;
+Compute idempotency key $\texttt{id} \leftarrow \mathcal{H}(\mathbf{x}\Vert t_0)$\;
+\If{$\texttt{id} \in \mathcal{D}$}{
+  Retrieve cached result $\mathcal{R}_{\text{cached}} \leftarrow \mathcal{D}[\texttt{id}]$\;
+  \Return{$\langle\mathtt{DUPLICATE},\mathcal{R}_{\text{cached}}\rangle$}\;
+}
+Initialize decision log $\mathcal{A}\leftarrow\varnothing$ and public set $P\leftarrow\varnothing$\;
+\ForEach{$(k_j,v_j)\in\mathbf{x}$}{
+  $\ell_{\mathrm{name}}\leftarrow\mathcal{R}_{\mathrm{name}}(k_j)$ \tcp*{$\textsc{critical}$ if unmatched}
+  $\ell_{\mathrm{val}}\leftarrow\mathcal{R}_{\mathrm{val}}(v_j)$ \tcp*{$\textsc{public}$ if unmatched}
+  $\ell_j\leftarrow\max(\ell_{\mathrm{name}},\ell_{\mathrm{val}})$ \tcp*{fail-closed}
+  Record $\langle k_j,\ell_j,\mathrm{rule\_id}_j,\mathrm{basis}_j\rangle$ in $\mathcal{A}$\;
+  \If{$\ell_j=\theta$}{$P\leftarrow P\cup\{(k_j,v_j)\}$\;}
+}
+Commit full payload $\mathbf{x}$ to Hyperledger Fabric and read it back\;
+\If{the private commit failed}{Release $\texttt{id}$ and return an error; nothing is anchored\;}
+\eIf{$P\neq\varnothing$}{
+  $m\leftarrow\mathrm{redact}(\mathbf{x},P)$; $h_m\leftarrow\mathcal{H}(m)$; $\texttt{path}\leftarrow\mathtt{HYBRID}$\;
+}{
+  $h_m\leftarrow\bot$; $\texttt{path}\leftarrow\mathtt{FABRIC\_ONLY}$\;
+}
+Atomically store the conditional outbox intent and deduplication record in the local store\;
+Emit \texttt{202 Accepted} with $\langle\texttt{id},\texttt{path},h_{\mathrm{fab}},t_{\mathrm{ack}}\rangle$\;
+Log $\mathcal{A}$ to the immutable audit trail\;
+\Return{$\langle\mathtt{ACCEPTED},\texttt{path},h_{\mathrm{fab}},h_m,\mathcal{A}\rangle$}\;
+\end{algorithm}
+
+\begin{algorithm}[!htbp]
+\scriptsize
+\color{blue}
+\caption{Pseudocode for digital-twin version commit and rollback}
+\label{alg:twin}
+\KwData{Digital twin $T$; proposed delta $\Delta$; optional rollback target $k$; current version $n$; checkpoint interval $q$}
+\KwResult{Updated twin head version; version metadata; anchor hash}
+Initialize version chain $\mathcal{V}$, checkpoint store $\mathcal{C}$, and current state $s_n$\;
+$\mathtt{op\_type}\leftarrow$ \textbf{if} $k\neq\mathtt{NULL}$ \textbf{then} $\mathtt{ROLLBACK}$ \textbf{else} $\mathtt{COMMIT}$\;
+\If{$\mathtt{op\_type}=\mathtt{ROLLBACK}$}{
+  Retrieve $\chi_k\leftarrow\mathcal{V}[k].\mathrm{digest}$\;
+  $u_{\mathrm{ckpt}}\leftarrow(k-1)\bmod q$; $u_{\mathrm{inv}}\leftarrow n-k$\;
+  \eIf{$\mathcal{V}[k]$ is materialized}{
+    $s_k\leftarrow\mathcal{V}[k].\mathrm{state}$; $u\leftarrow0$\;
+  }{
+    \eIf{$u_{\mathrm{ckpt}}\leq u_{\mathrm{inv}}$ or inverse chain unavailable}{
+      Restore the nearest preceding checkpoint and replay deltas through $k$\;
+      $u\leftarrow u_{\mathrm{ckpt}}$\;
+    }{
+      Set $s_k\leftarrow s_n$ and apply inverse deltas from $n$ down to $k+1$\;
+      $u\leftarrow u_{\mathrm{inv}}$\;
+    }
+  }
+  $\chi_{\mathrm{computed}}\leftarrow\mathrm{SHA256}(\mathrm{canon}(s_k))$\;
+  \If{$\chi_{\mathrm{computed}}\neq\chi_k$}{Abort with \texttt{INTEGRITY\_VIOLATION}; return no state\;}
+  $s'\leftarrow s_k$; $\chi'\leftarrow\chi_k$; $\Delta_{n+1}\leftarrow\mathtt{ROLLBACK\_TO}(k)$\;
+}
+\Else{
+  $s'\leftarrow\Delta(s_n)$; $\chi'\leftarrow\mathrm{SHA256}(\mathrm{canon}(s'))$\;
+  $\Delta_{n+1}\leftarrow s'\ominus s_n$\;
+  \eIf{$|\Delta_{n+1}|<|s'|$}{Persist $\Delta_{n+1}$\;}{Persist $s'$ directly as a snapshot fallback\;}
+  Compact reversible payloads older than trailing window $R$ to forward-only\;
+}
+$\tau'\leftarrow\mathtt{now}()$; append $v_{n+1}=\langle n+1,\mathtt{copy}(s'),\tau',\chi',\mathtt{op\_type},\Delta_{n+1}\rangle$\;
+\If{$n\bmod q=0$}{Store $\langle s',\tau',\chi',\mathrm{inverse\ link}\rangle$ as checkpoint $n+1$\;}
+$\mathcal{P}_{\mathrm{anchor}}\leftarrow\langle T.\texttt{id},n+1,\tau',\chi',\mathtt{op\_type}\rangle$\;
+$H_{\mathrm{anchor}}\leftarrow\mathrm{SHA256}(\mathcal{P}_{\mathrm{anchor}})$; emit the anchor to the outbox\;
+Create and log the audit record\;
+\Return{$\langle v_{n+1},\mathcal{P}_{\mathrm{anchor}},H_{\mathrm{anchor}}\rangle$}\;
+\end{algorithm}
+\medskip
+
+\point{Figure 1 colors are light and not clear so add increase size or enlarge
+for clear view.}
+
+\reply{Figure~1 is now a two-column \texttt{figure*} rendered at
+0.80\,\texttt{textwidth}, rather than a single-column figure. We also moved its
+in-text introduction before the figure and expanded the caption so that the
+data and control directions remain interpretable at print scale. During the
+same figure audit, we introduced and interpreted every experimental figure in
+the body text before its corresponding float.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Introduction and Figure~1):}
+
+\textcolor{blue}{Figure~1 summarises the resulting closed loop: IoT observations flow from physical assets through edge processing and hybrid-ledger governance to the digital twin, while verified decisions and lifecycle updates flow back to the physical system.}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{images/Fig 1.png}
+\caption*{\textcolor{blue}{Fig. 1: Conceptual relationship between physical entities and the digital twin, illustrating IoT-driven data acquisition, edge-level processing, and hybrid blockchain integration for secure, verifiable lifecycle synchronisation.}}
+\label{fig:dt_concept}
+\end{figure}
+
+\point{Paper contains few grammar mistakes which will be cooperated in final
+version.}
+
+\reply{We edited the complete manuscript for grammar, punctuation, article use,
+terminology, and consistency. We also standardised ``Figure'' references,
+hyphenation such as ``cross-ledger'' and ``multi-region'', symbol definitions,
+and the distinction between acknowledgement latency and completion latency.
+Captions were revised to state what is measured and how each panel should be
+interpreted.}
+
+\point{Only few references are added in paper, but more than 40 references so
+to attract readers add few latest references related to this paper, which is
+mentioned below: Jumani et al., ``Blockchain Security and Privacy: Threats,
+Solutions, and Future Directions''; Li et al., ``Blockchain applications for
+Internet of Things (IoT): A review''; Laghari et al., ``Internet of Things for
+gaming: A review''; and Laghari et al., ``Internet of multimedia things (IoMT):
+A review.''}
+
+\reply{We added and discussed all four suggested references in the Related
+Works section. They are used to strengthen the manuscript's treatment of
+blockchain security and privacy, blockchain--IoT integration, heterogeneous
+application domains, and latency- and privacy-sensitive multimedia streams.
+We also added the three recent papers suggested by Reviewer~1, for seven new
+review-suggested references in total. Finally, we now position four closely
+related publications by the authors and state explicitly how OrBIT differs from
+that prior work. This additional disclosure strengthens, rather than substitutes
+for, the independent literature requested by the reviewers.}
+
+\medskip
+\noindent\textbf{Revised material reproduced in full (Related Works):}
+
+\textcolor{blue}{Research on blockchain-enabled digital twins has expanded rapidly across cyber-physical infrastructures, driven by the need for trustworthy synchronisation, secure data exchange, and resilient decision intelligence. Early studies enhance DT security through decentralised trust models, with blockchain supporting integrity, provenance, and auditability. Authors~[21], for example, map attack surfaces across physical, data, model, and application layers, highlighting man-in-the-middle attacks, data poisoning, and model tampering. Authors~[6] show that Ethereum-based DLT integration can support verifiable IoT data flows but also identify performance and scalability limits when moving from permissioned storage to public anchoring.}
+
+\textcolor{blue}{Beyond baseline security, DT research has progressed toward behaviour-aware protection. Authors~[20] introduce TRIPLE, a DT-centric architecture combining blockchain provenance, threat intelligence, and hybrid modelling for continuous situational awareness. The approach remains primarily conceptual and does not define comprehensive lifecycle-governance semantics. Authors~[14] identify interoperability, data trustworthiness, and architectural immaturity as barriers to robust blockchain-integrated DT deployment. Together, these studies motivate structured lifecycle management and multi-layer coordination.}
+
+\textcolor{blue}{Recent surveys sharpen the security and deployment context of this problem. Authors~[13] catalogue blockchain--IoT applications and identify interoperability, scalability, and multi-organisation security as persistent constraints; Authors~[10] similarly organise blockchain threats, privacy mechanisms, and quality-of-service trade-offs. IoT reviews in gaming and multimedia environments~[12,11] show that heterogeneous sensors generate latency-sensitive and privacy-sensitive streams beyond conventional industrial telemetry. These application domains motivate a routing and provenance layer whose safety properties do not depend on a learned classifier or a single workload distribution.}
+
+\textcolor{blue}{The three additional works suggested during review occupy adjacent rather than directly competing layers. CardioTwin-XAI builds a federated predictive digital twin for cardiovascular care~[27]; FedLiverNet protects collaborative liver-image learning~[15]; and NeuroShield-Diabetes applies neural cryptography to health-data exchange~[26]. They provide application- or model-level privacy mechanisms but do not specify a Fabric-to-Ethereum commit protocol, relay coordination rule, or comparable end-to-end ledger workload. Treating their predictive accuracy or cryptographic cost as an OrBIT throughput baseline would therefore compare different dependent variables. We instead use three protocol-level baselines: Fabric-only ingestion, synchronous public anchoring, and uncoordinated race relays, with identical payloads and ledger topology.}
+
+\textcolor{blue}{Hybrid-blockchain architectures for security-critical digital-twin exchange are especially close to OrBIT. In a prior work, we ~[2] synthesize 116 studies into a layered reference architecture spanning physical operations, permissioned consensus, and public anchoring, while identifying governance, post-quantum resilience, standardised inter-chain protocols, and real-world deployment validation as open challenges. In another complementary implementation work, we ~[3] combine Hyperledger Fabric and Ethereum with lattice-based protection and CNN--LSTM-driven device revocation for quantum-resilient IoT data sharing. OrBIT addresses a different systems question: deterministic field-level publication, crash-safe exactly-once cross-ledger effects, reconciliation, integrity-verified twin-state rollback, and multi-region commit-path measurement. OrBIT does not claim post-quantum confidentiality or machine-learning-based anomaly detection.}
+
+\textcolor{blue}{At the resource-constrained endpoint layer, authors~[4] combine lightweight federated intrusion detection with a resource-efficient blockchain mechanism. This work is complementary to OrBIT: it protects and classifies device behaviour before ingestion, whereas OrBIT assumes that submitted telemetry has reached the orchestrator and focuses on privacy routing, cross-ledger consistency, provenance, and lifecycle recovery. More broadly, Authors~[5] analyse the security--scalability--decentralisation trilemma in autonomous intelligent vehicles. Although OrBIT does not evaluate vehicular workloads, that analysis motivates its explicit reporting of latency, relay capacity, and trust boundaries rather than presenting hybridisation as eliminating the underlying trade-offs.}
+
+Access control and data governance are significant areas of focus in the DT security literature. Authors~[7] developed a CP ABE  and IPFS-enabled DT access control framework that provides fine-grained authorisation and efficient distributed storage. Although technically rigorous, this model prioritises cryptographic enforcement and does not address lifecycle-aware behavioural verification. Authors~[19], through their digital twin as proxy architecture, positioned twins as intermediaries to prevent direct sensor access and maintain auditability using Ethereum-backed trust registries. While this model enhances IoT device privacy, it remains domain-restrictive and lacks orchestration logic for multi-twin governance. These studies reinforce the necessity for secure access governance that integrates DT semantics, evolving states, and operational context.
+
+Other technically advanced contributions explore blockchain-driven optimisation and cyber resilience mechanisms within DT-enabled networks. Authors~[8] designed a blockchain-empowered caching system enhanced with digital twin state prediction and reinforcement learning (PPO) to improve reliability and resource efficiency in D2D networks. Their approach demonstrates the potential of combining DT prediction with decentralised trust but remains confined to communication-level optimisation. Similarly, authors~[22] introduced a federated, blockchain-secured, risk-adaptive deep learning framework to improve edge intelligence robustness, integrating zk SNARK verification, adversarial simulation, and energy-aware synchronisation. Although highly technical, it remains focused on federated learning rather than DT lifecycle coherence. These studies expose a growing interest in unifying intelligence, decentralisation, and behavioural modelling, yet none address the holistic governance challenges of multi-actor DT ecosystems.
+
+Further research addresses forensics and global trends in DT–blockchain systems. Akremi’s ForensicTwin architecture incorporates forensic readiness attributes, such as provenance, integrity checks, and ontology-based evidence reasoning, directly into DT pipelines to ensure post-incident admissibility~[1]. Bibliometric studies, including those by authors~[17], trace the evolution of DT blockchain research and identify persistent gaps in lifecycle governance, interoperability, and cross-domain orchestration. Authors~[24] extend DT security into healthcare by combining Hyperledger-backed auditability with machine learning-driven anomaly detection, while author~[16] synthesises DT IoT blockchain synergies within supply chain analytics, emphasising resilience and traceability. Authors~[25] present a comprehensive IoDT security taxonomy, introducing semantic communication threats, multi-twin attack surfaces, and vulnerabilities in decentralised intelligence. Collectively, these surveys demonstrate that technical advancements continue to outpace unified governance, lifecycle semantics, and cross-twin synchronisation standards.
+
+\textcolor{blue}{Despite significant progress in these domains, current research lacks a lifecycle-governed,
+blockchain-orchestrated digital twin architecture that delivers formalized state-transition
+verification, hybrid-chain trust anchoring, and deterministic, auditable privacy governance
+throughout the entire DT lifecycle. The proposed OrBIT framework addresses these gaps by
+offering:}
+\begin{enumerate}
+    \item \textcolor{blue}{Formal DT lifecycle semantics with verifiable, append-only state transitions.}
+    \item \textcolor{blue}{Hybrid-chain orchestration for verifiable trust anchoring with exactly-once cross-ledger effects under crash faults.}
+    \item \textcolor{blue}{Deterministic, fail-closed privacy routing grounded in established data-protection standards, providing a by-construction guarantee on public-ledger exposure.}
+    \item \textcolor{blue}{A distributed, multi-region evaluation that separates ingestion latency, public-ledger currency, and fault recovery.}
+\end{enumerate}
+\textcolor{blue}{OrBIT does not claim to replace a decentralised oracle or trustless bridge. Its relay workers are permissioned operational agents: leases prevent redundant submissions, while the Fabric record, Ethereum identifier uniqueness, and an independent auditor make omission or alteration detectable. A decentralised oracle network could consume the same outbox and commitment protocol, but would introduce a different validator and incentive model that is outside the present evaluation.}
+
+
+
+\section*{Closing Statement}
+We again thank the reviewers for comments that materially improved the paper.
+The revision now provides a geographically distributed evaluation, explicit
+fault and trust boundaries, protocol-comparable baselines, reproducible
+pseudocode, clearer figures, and a point-by-point account of both completed and
+unrun experiments. We have deliberately avoided claiming Byzantine or trustless
+bridge guarantees that were not measured.
+
+\end{document}
