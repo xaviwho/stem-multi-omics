@@ -516,7 +516,7 @@ Most biomedical provenance systems record where data came from but not how they 
 \textit{(3) No external validation.} All results come from one scRNA-seq dataset and one proteomic dataset. The framework has not been tested on independent datasets, other iPSC lines, or other DA differentiation protocols, and its generalisability remains to be established. The 200 trajectories are pseudo-trajectories built from independent cells rather than lineage-traced paths, and are fixed across seeds.
 \end{revised}
 
-\point{\loc{Q7, item 4} Drug perturbation prediction and virtual screening have not been directly validated experimentally, and their potential applications should be discussed with appropriate caution.}
+\point{Drug perturbation prediction and virtual screening have not been directly validated experimentally, and their potential applications should be discussed with appropriate caution.}
 
 \reply{We added Limitation~7, rewrote the Future directions paragraph in conditional terms, and qualified the drug-screening statements in the abstract and conclusion.}
 
@@ -527,7 +527,7 @@ Most biomedical provenance systems record where data came from but not how they 
 [\ldots] If such a model were trained on perturbation data and its predictions confirmed experimentally, it could support virtual drug screening for Parkinson's disease: candidate compounds targeting the dopamine synthesis pathway could be ranked by the proximity of their predicted D52 states to a target therapeutic phenotype, to prioritise --- not replace --- wet-lab experiments. None of these steps has been validated yet.
 \end{revised}
 
-\point{\loc{Q8, item 1} The objectives and main contributions should be stated more clearly at the end of the Introduction.}
+\point{ The objectives and main contributions should be stated more clearly at the end of the Introduction.}
 
 \reply{The Introduction now ends with an Objectives paragraph followed by the contribution list ordered by importance. Both are reproduced under Review~1.1.}
 
@@ -535,7 +535,7 @@ Most biomedical provenance systems record where data came from but not how they 
 
 \reply{The matching strategy is now a dedicated Methods subsection (Section~3.2.3) with explicit matching rules, a stage-correspondence table (Table~2), and a per-replicate sample table (Table~3). These are reproduced under Reviews~2.3, 2.5, and~2.10.}
 
-\point{\loc{Q8, item 3} The Results section should clearly distinguish stage classification from trajectory prediction to avoid confusion about their respective implications.}
+\point{The Results section should clearly distinguish stage classification from trajectory prediction to avoid confusion about their respective implications.}
 
 \reply{The benchmark results are now split into two subsections, ``Stage classification (Task~A): a separability check'' (Section~4.3.1) and ``Trajectory prediction (Task~B)'' (Section~4.3.2), introduced by a paragraph that states what each task measures and that a result on one carries no implication for the other.}
 
@@ -544,7 +544,7 @@ Most biomedical provenance systems record where data came from but not how they 
 The two tasks answer different questions and are reported separately. Task~A (stage \textit{classification}, Section~4.3.1) asks whether the stages can be told apart from a single state vector; it characterises the representation. Task~B (trajectory \textit{prediction}, Section~4.3.2) asks how well the late-stage state can be forecast from earlier states; it is the forecasting question a digital twin is built for. A result on one task carries no implication for the other.
 \end{revised}
 
-\point{\loc{Q8, item 4} Some technical details regarding blockchain deployment and smart contracts could be shortened or moved to the Supplementary Materials.}
+\point{ Some technical details regarding blockchain deployment and smart contracts could be shortened or moved to the Supplementary Materials.}
 
 \reply{We moved the compiler settings (Solidity version and EVM options) and six deployment metrics (SHA-256 throughput, per-source latency, gas per transaction, chain ID, bytecode size, and confirmation depth) to the new Supplementary Table~S1, trimmed Table~10 to the verification-relevant metrics, and shortened the blockchain discussion to one paragraph (reproduced under Review~2.16).}
 
@@ -570,7 +570,7 @@ Confirmation depth & 72,011 blocks since registration \\
 \end{tabular}
 \end{table}
 
-\point{\loc{Q9} Could the manuscript benefit from language editing? Yes.}
+\point{ Could the manuscript benefit from language editing? Yes.}
 
 \reply{Please see our reply to Review~1.15: the complete manuscript was proofread, all new and rewritten passages were edited for clarity and concision, terminology was standardised, and the abstract was rewritten in full. Language-only corrections are shown in red without a superscript tag.}
 
