@@ -210,15 +210,21 @@ def plot(rep: pd.DataFrame, summ: pd.DataFrame, out_base: Path) -> None:
     axes[0].set_ylabel(r"$\log_2(1 + \mathrm{LFQ})$")
 
     from matplotlib.lines import Line2D
+    from matplotlib.legend_handler import HandlerTuple
+    # Legend uses the actual stage colours/shapes (colour = stage, fill = detection)
+    filled = tuple(Line2D([], [], ls="", marker=STAGE_MARKERS[st], ms=7, color=STAGE_COLORS[st],
+                          markeredgecolor="white") for st in STAGES)
+    hollow = tuple(Line2D([], [], ls="", marker=STAGE_MARKERS[st], ms=7, markerfacecolor="white",
+                          markeredgecolor=STAGE_COLORS[st], markeredgewidth=1.4) for st in STAGES)
     handles = [
-        Line2D([], [], ls="", marker="o", ms=7, color=MUTED, label="replicate (detected)"),
-        Line2D([], [], ls="", marker="o", ms=7, markerfacecolor="white", markeredgecolor=MUTED,
-               label="replicate (not detected, LFQ = 0)"),
-        Line2D([], [], color=INK, lw=1.6, label="stage mean"),
-        Line2D([], [], ls="", marker="D", ms=4, color=MUTED,
-               label=r"trajectory generator $\mu \pm \sigma$"),
+        filled, hollow,
+        Line2D([], [], color=INK, lw=1.6),
+        Line2D([], [], ls="", marker="D", ms=4, color=MUTED),
     ]
-    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False,
+    labels = ["detected (filled)", "not detected, LFQ = 0 (hollow)", "stage mean",
+              r"trajectory generator $\mu \pm \sigma$"]
+    fig.legend(handles=handles, labels=labels, loc="lower center", ncol=4, frameon=False,
+               handler_map={tuple: HandlerTuple(ndivide=None, pad=0.3)}, handlelength=3.2,
                bbox_to_anchor=(0.5, -0.06), fontsize=9)
     fig.tight_layout(rect=(0, 0.06, 1, 1))
     out_base.parent.mkdir(parents=True, exist_ok=True)

@@ -24,7 +24,9 @@
 %% \rev{R1.2}{text}       tagged inline red text
 %% \begin{revblock}{R1.2} ... \end{revblock}   tagged red block
 %%                        (paragraphs, equations, lists)
-\newcommand{\rtag}[1]{\textsuperscript{\textcolor{red}{\textbf{#1}}}}
+%% Reviewer tags hidden; to show them again use:
+%% \newcommand{\rtag}[1]{\textsuperscript{\textcolor{red}{\textbf{#1}}}}
+\newcommand{\rtag}[1]{}
 \newcommand{\rev}[2]{\rtag{#1}\textcolor{red}{#2}}
 \newenvironment{revblock}[1]{\par\color{red}\rtag{#1}\ignorespaces}{\par}
 %% \lang{text}  language correction (R1.15, R2.25): red, untagged
