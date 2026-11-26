@@ -1,0 +1,50 @@
+%% Supplementary Material for CMPB-D-26-05530 (revision).
+%% New in this revision (R2.24): blockchain deployment details moved
+%% out of the main text.
+\documentclass[11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\title{Supplementary Material\\[4pt]
+\large Proteomics-Integrated Digital Twin State Space for
+Dopaminergic Stem Cell Differentiation}
+\date{}
+
+\begin{document}
+\maketitle
+\color{red}
+
+\section*{S1. PureChain provenance deployment details}
+
+The \texttt{MultiOmicsProvenance} smart contract was compiled with
+Solidity 0.8.20 using \texttt{evmVersion: paris} and
+\texttt{viaIR: true}, to target the pre-Shanghai Ethereum Virtual
+Machine supported by PureChain, and deployed on the PureChain
+mainnet (RPC endpoint \texttt{https://purechainnode.com}).
+Table~S1 lists the deployment and performance metrics that were
+moved from the provenance verification table of the main text.
+
+\begin{table}[h]
+\centering
+\caption*{\textbf{Table S1.} PureChain deployment and performance
+metrics.}
+\begin{tabular}{ll}
+\toprule
+Metric & Value \\
+\midrule
+Contract address & \texttt{0xFA954E93c389D54B05FBA832276B7C7a42bAeD51} \\
+Chain ID & 900520900520 \\
+Compiler & Solidity 0.8.20 (\texttt{evmVersion: paris}, \texttt{viaIR: true}) \\
+Contract bytecode & 4,716 bytes \\
+SHA-256 throughput & 298\,MB/s \\
+Per-source registration latency (Novak) & 33\,ms \\
+Per-transaction gas (Jerber / Novak) & 405,683 / 472,168 \\
+Per-transaction cost & 0\,PCG (gas-free) \\
+Confirmation depth & 72,011 blocks since registration \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

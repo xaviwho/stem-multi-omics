@@ -1,4 +1,7 @@
-     %% ICT Express — two-column, 6-page target
+%% Computer Methods and Programs in Biomedicine — revised manuscript
+%% (CMPB-D-26-05530). Revisions are shown in red; the superscript tag
+%% before each change gives the reviewer comment it answers
+%% (R1.x = Reviewer 1, R2.x = Reviewer 2, AC = author correction).
 %% Template: elsarticle 5p (two-column, Times)
 \documentclass[5p,times,twocolumn]{elsarticle}
 
@@ -14,7 +17,16 @@
 \usepackage{balance}
 \usepackage{hyperref}
 
-\journal{ICT Express}
+%% ---- revision highlighting ----------------------------------------
+%% \rtag{R1.2}            superscript comment tag (red, bold)
+%% \rev{R1.2}{text}       tagged inline red text
+%% \begin{revblock}{R1.2} ... \end{revblock}   tagged red block
+%%                        (paragraphs, equations, lists)
+\newcommand{\rtag}[1]{\textsuperscript{\textcolor{red}{\textbf{#1}}}}
+\newcommand{\rev}[2]{\rtag{#1}\textcolor{red}{#2}}
+\newenvironment{revblock}[1]{\par\color{red}\rtag{#1}\ignorespaces}{\par}
+
+\journal{Computer Methods and Programs in Biomedicine}
 
 \begin{document}
 
@@ -48,6 +60,11 @@ adding a protein abundance score $Pr_{t}$ derived
 from label-free mass-spectrometry proteomics of
 induced pluripotent stem cell-derived dopaminergic
 (iPSC-DA) neurons.
+\rev{R1.1,R2.1}{The primary objective is to construct and
+validate this proteomics-integrated state representation;
+stage separability and trajectory prediction are the two
+tests used to evaluate it, and blockchain provenance is
+supporting reproducibility infrastructure.}
 Data provenance is secured by a
 \texttt{MultiOmicsProvenance} smart contract
 deployed on PureChain, a lightweight gas-free, permissioned
@@ -64,19 +81,30 @@ permutation, leave-one-replicate-out, and
 single-feature analyses confirm the separability
 reflects genuine proteomic-stage signal localised on
 the $Pr_{t}$ axis rather than added model capacity.
+\rev{R1.8,R2.12}{Because a $Pr_{t}$-only classifier
+reaches the same score, this result is evidence of stage
+separability along the proteomic axis, not of model
+superiority.}
 On trajectory prediction, the 3D state reduces mean
 absolute error by 28--31\% over the transcriptomic
 baseline across all model families (paired Wilcoxon
-$p < 10^{-3}$, Holm-corrected), an improvement driven
-by the added proteomic dimension without degrading
-the forecasts of the original transcriptomic axes.
+$p < 10^{-3}$, Holm-corrected\rev{R1.4}{; 95\% bootstrap
+confidence intervals from $-25.6\%$ to $-31.9\%$}).
+\rev{R1.9,R2.13}{This reduction comes from adding a
+well-forecastable proteomic dimension: the errors on the
+original $P_{t}$ and $D_{t}$ axes are unchanged.}
+\rev{R1.5,R2.8}{All proteomic conclusions rest on only
+3/2/2 control replicates per stage and should be read
+with that limitation in mind.}
 Cross-modal Spearman correlations
 ($|\rho| \leq 0.08$ at every stage) confirm
-that $Pr_{t}$ carries biological information
-orthogonal to $P_{t}$ and $D_{t}$.
+that \rev{AC}{the assembled state introduces no spurious
+within-stage coupling between $Pr_{t}$ and $P_{t}$, $D_{t}$}.
 The blockchain-secured, reproducible framework
-provides the foundation for perturbation-aware
-virtual drug screening in Parkinson's disease.
+provides \rev{R2.20}{a possible} foundation for
+perturbation-aware virtual drug screening in
+Parkinson's disease\rev{R2.20}{, which has not yet been
+validated experimentally}.
 \end{abstract}
 
 \begin{keyword}
@@ -108,9 +136,9 @@ iPSC-derived DA (iPSC-DA) neurons as a patient-matched
 cellular substrate for both transplantation therapy
 and in vitro drug screening~\cite{oz2023neural}.
 Yet the controlled prediction of iPSC-DA maturation
-across discrete differentiation stages: pluripotent
-(D11), transitional (D30), and mature dopaminergic
-(D52), remains an open computational challenge,
+across discrete differentiation stages\rev{AC}{ ---
+early floor-plate progenitor (D11), transitional (D30),
+and mature dopaminergic (D52) ---} remains an open computational challenge,
 limiting the utility of these models in drug
 development pipelines.
 
@@ -149,7 +177,28 @@ $\mathbf{s}_{t} = [P_{t}, D_{t}, Pr_{t}]$,
 benchmarked across multiple model families with
 permutation-validated signal confirmation and
 supported by a deployed DLT provenance layer.
-The contributions of this work are fourfold:
+
+\begin{revblock}{R1.1,R2.1,R2.21}
+\textbf{Objectives.} The primary objective of this study is
+the construction and validation of a proteomics-integrated
+state representation for iPSC-DA differentiation. Two
+questions are asked of this representation, and they are
+kept separate throughout the paper:
+\textit{(O1) stage separability} --- does the added
+proteomic axis distinguish the three differentiation stages
+that the transcriptomic axes confuse? (Task~A); and
+\textit{(O2) trajectory prediction} --- does the 3D state
+improve forecasting of the late-stage state from earlier
+states, and on which axes? (Task~B).
+O1 is a diagnostic of the representation rather than a
+predictive goal in itself; O2 is the forecasting question
+for which a digital twin is ultimately intended.
+The blockchain provenance layer is a secondary, supporting
+contribution that makes the multi-source pipeline
+verifiable; it does not affect any modelling result.
+In order of importance, the four contributions of this
+work are:
+\end{revblock}
 
 \begin{enumerate}
   \item \textbf{A proteomics-integrated 3D state space}
@@ -159,7 +208,7 @@ The contributions of this work are fourfold:
     label-free proteomic marker sets under a principled
     curation protocol, extending transcriptomic-only DT
     baselines to the protein layer where drug targets
-    reside.
+    reside\rev{R1.1}{ (the main novelty of the work)}.
   \item \textbf{A multi-seed, multi-control evaluation
     framework} benchmarking the 3D state against the 2D
     baseline across three model families on stage
@@ -181,7 +230,8 @@ The contributions of this work are fourfold:
     PureChain mainnet that records immutable SHA-256
     fingerprints of all raw inputs and processed outputs
     at every pipeline stage, providing independent
-    reproducibility verification for all results reported.
+    reproducibility verification for all results reported\rev{R1.1}{
+    (a supporting contribution)}.
 \end{enumerate}
 
 
@@ -195,6 +245,11 @@ engineering systems, has been progressively adapted
 to biomedical applications, as the availability of
 high-dimensional molecular data has
 grown~\cite{masison2021modular}.
+\rev{R1.16}{In engineering, state-space digital twins combined
+with predictive control already support real-time stability
+monitoring~\cite{pandey2026statespace}; the present work
+applies the same state-space view of a digital twin to a
+biological differentiation process.}
 In the clinical domain, DT frameworks have been
 applied to patient-specific disease trajectory
 modelling, treatment response forecasting, and
@@ -370,7 +425,9 @@ iPSC-DA differentiation DT construction.
 
 \begin{figure*}[!htbp]
   \centering
-  \includegraphics[width=0.55\linewidth]{images/fig1_pipeline.png}
+  %% R1.6: printed width increased from 0.55 to 0.85\linewidth so the
+  %% pipeline labels are legible.
+  \includegraphics[width=0.85\linewidth]{images/fig1_pipeline.png}
   \caption{Proteomics-integrated digital twin pipeline for
     dopaminergic stem cell differentiation.
     Transcriptomic scRNA-seq~\cite{jerber2021population} and
@@ -379,9 +436,13 @@ iPSC-DA differentiation DT construction.
     into a 3D state vector
     $\mathbf{s}_{t} = [P_{t}, D_{t}, Pr_{t}] \in [0,1]^{3}$
     ($N = 200$ trajectories, split 140/30/30) and benchmarked
-    across Ridge, Random Forest, and Transformer DT models
+    across \rev{R1.6,AC}{a linear model (logistic regression
+    for Task~A, Ridge regression for Task~B)}, Random Forest,
+    and Transformer DT models
     on stage separability (Task~A) and trajectory prediction
     (Task~B).
+    \rev{R1.6}{The figure is printed at a larger size in this
+    revision for legibility.}
     The amber bar denotes the PureChain blockchain provenance
     layer: SHA-256 fingerprints are registered at ingestion
     and after processing.
@@ -456,7 +517,7 @@ EGA         & European Genome-phenome Archive \\
 \midrule
 \multicolumn{2}{l}{\textit{Timepoints}} \\
 \midrule
-D11         & Differentiation day 11 (pluripotent stage) \\
+D11         & Differentiation day 11 (\rev{AC}{floor-plate progenitor stage}) \\
 D25         & Differentiation day 25 (Novak et al. protocol) \\
 D30         & Differentiation day 30 (transitional stage) \\
 D40         & Differentiation day 40 (Novak et al. protocol) \\
@@ -483,8 +544,11 @@ $\mathcal{G}_{P} = \{\text{POU5F1, NANOG, SOX2, UTF1, TDGF1}\}$,
 and a dopaminergic differentiation score $D_{t}$, derived
 from six dopamine-neuron marker genes
 $\mathcal{G}_{D} = \{\text{TH, DDC, SLC6A3, DRD2, LMX1A, FOXA2}\}$.
-Both scores are scaled to $[0,1]$ using min-max normalisation
-bounds computed exclusively from the training split.
+\rev{R2.6,AC}{Both scores are scaled to $[0,1]$ with fixed
+min-max bounds taken over all 161,584 untreated cells
+($P \in [0, 1.602]$, $D \in [0, 1.684]$ before scaling), as in
+the published baseline (Section~\ref{sec:state} discusses why
+this does not leak label information).}
 A Transformer encoder (4 layers, 4 attention heads,
 $d_{\text{model}} = 128$, feedforward dimension 512,
 dropout 0.1) trained on $N = 200$ sampled trajectories
@@ -545,6 +609,46 @@ This recovered 2,965 protein groups --- 23$\times$ the
 public curation --- including the canonical DA-pathway
 proteins TH, DDC, ALDH1A1, and COMT.
 
+\begin{revblock}{R2.4}
+\textbf{Proteomic data used for the reported results.}
+The local re-processing above covers only the eight
+deposited D25/D40 raw files and is used solely for the
+robustness check at the end of
+Section~\ref{sec:matching}.
+All $Pr$ values in the Results are computed from the
+canonical MaxQuant \texttt{proteinGroups} table of the same
+study, provided by the original
+authors~\cite{novak2022single}, which additionally contains
+the iPSC samples and carries the biological sample label of
+every column.
+It was processed as follows.
+\textit{(i) Filtering:} protein groups flagged as reverse
+(decoy) hits, potential contaminants, or identified only by
+a modification site were removed (3,669 $\to$ 3,577 groups).
+\textit{(ii) Gene mapping:} groups listing several gene
+names were split into one row per gene, and LFQ intensities
+of the same gene appearing in more than one group were
+summed on the linear scale.
+\textit{(iii) Sample selection:} only the seven healthy
+control (CTRL) columns were used
+(Section~\ref{sec:matching}); the columns of the PINK1 and
+other non-control lines were excluded so that disease effects
+cannot enter the stage signal.
+\textit{(iv) Missing values:} no imputation was applied.
+A protein not quantified in a sample has an LFQ intensity of
+0 in MaxQuant, which enters Eq.~\eqref{eq:Pr} as
+$\log_{2}(1+0) = 0$; a non-detection is thus treated as the
+abundance floor, which is the biologically expected state for
+DA-pathway enzymes in undifferentiated cells.
+No sample was removed for missingness.
+\textit{(v) Replicate aggregation:} $Pr$ is first computed
+per biological replicate (Eq.~\eqref{eq:Pr}); the stage mean
+$\mu_{\text{stage}}$ and sample standard deviation
+$\sigma_{\text{stage}}$ ($n-1$ denominator) are then taken
+across that stage's replicates.
+Technical replicates are not present in the canonical table.
+\end{revblock}
+
 \begin{table*}[!htbp]
 \caption{%
   Proteomics marker set $\mathcal{G}_{Pr}$ curation
@@ -553,7 +657,14 @@ proteins TH, DDC, ALDH1A1, and COMT.
   abundance across iPSC $\to$ D25 $\to$ D40 were retained.
   Per-stage values are log$_{2}$ LFQ intensities from
   the canonical CTRL-only proteinGroups;
-  n/d = not detected by standard whole-cell-lysate LFQ.}
+  n/d = not detected by standard whole-cell-lysate LFQ.
+  \rev{R2.4}{Values are means of $\log_{2}(1+\text{LFQ})$ over
+  the stage's CTRL replicates; 0.00 means the protein is
+  present in the table but has LFQ $= 0$ (not quantified) in
+  every replicate of that stage, whereas n/d means it is absent
+  from the table altogether. The iPSC value of TH (7.32) comes
+  from a single replicate (21.97) averaged with two
+  non-detections (Table~\ref{tab:replicates}).}}
 \label{tab:gpr}
 \centering
 \scalebox{0.70}{
@@ -621,6 +732,67 @@ KCNJ6
 \end{tabular}}
 \end{table*}
 
+\subsubsection{\rev{R2.22}{Cross-dataset stage correspondence}}
+\label{sec:matching}
+
+\begin{revblock}{R2.3,R2.22}
+The transcriptomic and proteomic data come from two
+independent studies that sampled different days, so a stage
+correspondence is required.
+Stages were matched by \textit{ordinal developmental
+position} rather than by calendar day, using three rules:
+(1) both datasets follow a midbrain floor-plate DA
+differentiation protocol from iPSCs;
+(2) each proteomic stage is assigned to the transcriptomic
+stage occupying the same position in the sequence
+pre-DA $\to$ early DA neuron $\to$ most mature DA neuron
+sampled; and
+(3) the assignment is fixed before any model is trained
+and is never tuned on model performance.
+Under these rules, iPSC is matched to D11, D25 to D30, and
+D40 to D52 (Table~\ref{tab:stagemap}).
+iPSC and D11 floor-plate progenitors are both pre-DA stages
+in which the DA-pathway enzymes are not yet expressed at the
+protein level (three of the four $\mathcal{G}_{Pr}$ markers
+are undetected in every iPSC replicate;
+Table~\ref{tab:replicates}), so both sit at the floor of the
+$Pr$ axis. D25 and D30 both fall in the early post-mitotic
+window in which TH and DDC are already abundant but the
+A9-associated marker ALDH1A1 is not yet detected. D40 and D52
+are the latest, most mature stages sampled by each study, and
+ALDH1A1 is first detected at D40.
+The 5- and 12-day offsets between matched stages, and the
+iPSC-versus-progenitor difference at the first stage, are an
+approximation; their consequences are discussed in the
+Limitations (Section~\ref{sec:limitations}).
+\end{revblock}
+
+\begin{table}[!htbp]
+\color{red}
+\caption{\rtag{R2.10}Correspondence between transcriptomic and
+proteomic stages. $n$ is the number of cells (scRNA-seq) or of
+CTRL biological replicates (proteomics) at each stage.}
+\label{tab:stagemap}
+\centering
+\scalebox{0.70}{
+\begin{tabular}{lllll}
+\toprule
+Model & \multicolumn{2}{c}{Transcriptomics~\cite{jerber2021population}}
+      & \multicolumn{2}{c}{Proteomics~\cite{novak2022single}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+stage & Day ($n$ cells) & State & Day ($n$ reps) & State \\
+\midrule
+D11 & D11 (50,661) & floor-plate progenitor & iPSC (3) & undifferentiated \\
+D30 & D30 (50,169) & early DA neuron        & D25 (2)  & early DA neuron \\
+D52 & D52 (60,754) & mature DA neuron       & D40 (2)  & mature DA neuron \\
+\bottomrule
+\multicolumn{5}{l}{Sources: ENA \texttt{PRJEB38269} / Zenodo
+\texttt{4333872}; PRIDE \texttt{PXD028283} and canonical}\\
+\multicolumn{5}{l}{\texttt{proteinGroups} table from the original
+authors. Untreated / CTRL samples only.}
+\end{tabular}}
+\end{table}
+
 \textbf{Sample-identity assignment:}
 The PRIDE deposit does not include the autosampler-vial to
 biological-sample mapping.
@@ -636,6 +808,70 @@ replicates per stage.
 The robustness of stage assignment to this small replicate
 count is established directly by the leave-one-replicate-out
 probe described in Section~\ref{sec:loro}.
+
+\begin{revblock}{R2.5,R2.11}
+Table~\ref{tab:replicates} lists every replicate used, from
+its label in the canonical table to its model stage, together
+with the per-marker abundances and the resulting $Pr$ value,
+and Figure~\ref{fig:replicates} plots the individual
+replicates.
+The canonical sample labels are the column names of the
+authors' \texttt{proteinGroups} table; the deposited raw files
+(\texttt{Skupin11--18}) cannot be linked to these labels,
+because the PRIDE deposit does not record the vial-to-sample
+mapping and contains no iPSC samples.
+The figure shows that replicate agreement differs sharply by
+stage: the two D25 replicates (D30 stage) and the two D40
+replicates (D52 stage) agree closely, whereas the three iPSC
+replicates do not --- TH is quantified in only one of them,
+and no other marker is detected in any of them.
+\end{revblock}
+
+\begin{table*}[!htbp]
+\color{red}
+\caption{\rtag{R2.5}Canonical CTRL proteomic replicates: sample
+label, stage assignment, number of replicates $n$ in the
+stage, per-marker abundance
+($\log_{2}(1+\text{LFQ})$; n.q.\ = not quantified, LFQ $= 0$,
+entering Eq.~\eqref{eq:Pr} as 0),
+and the replicate-level proteomic score $Pr$
+(Eq.~\eqref{eq:Pr}).}
+\label{tab:replicates}
+\centering
+\scalebox{0.80}{
+\begin{tabular}{llllcccccc}
+\toprule
+Sample label & Condition & Source day & Model stage & $n$ & TH & DDC & ALDH1A1 & COMT & $Pr$ \\
+\midrule
+\texttt{cont IPS prot} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+\texttt{cont IPSC} & CTRL & iPSC & D11 & 3 & 21.97 & n.q. & n.q. & n.q. & 5.49 \\
+\texttt{cont prot IPSC} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+\texttt{D25 C7} & CTRL & D25 & D30 & 2 & 25.46 & 28.01 & n.q. & 22.46 & 18.98 \\
+\texttt{D25 C8} & CTRL & D25 & D30 & 2 & 25.39 & 28.09 & n.q. & 22.38 & 18.96 \\
+\texttt{D40 C 7} & CTRL & D40 & D52 & 2 & 26.03 & 27.92 & 22.49 & 23.19 & 24.90 \\
+\texttt{D40 C 8} & CTRL & D40 & D52 & 2 & 27.56 & 27.88 & 22.52 & 23.09 & 25.26 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+\begin{figure*}[!htbp]
+  \centering
+  \includegraphics[width=0.95\linewidth]{images/fig_pr_replicates.png}
+  \caption{\rtag{R2.11}\textcolor{red}{%
+    \textbf{Individual proteomic CTRL replicates at each stage.}
+    Columns show the four $\mathcal{G}_{Pr}$ markers and the
+    replicate-level $Pr$ score on the $\log_{2}(1+\text{LFQ})$
+    scale. Filled markers are quantified values; hollow markers
+    are non-detections (LFQ $= 0$). Black bars are stage means.
+    In the $Pr$ panel, grey diamonds with error bars show the
+    mean $\pm$ s.d.\ of the distribution from which
+    per-trajectory $Pr$ values are drawn
+    (Section~\ref{sec:state}); at D11 this is the detection-floor
+    anchor $\mathcal{N}(0, \sigma_{\text{D11}}/2)$ rather than the
+    replicate mean. Stage is encoded by both x-position and
+    marker shape. $n = 3/2/2$ replicates.}}
+  \label{fig:replicates}
+\end{figure*}
 
 As a methodological robustness check, an interim
 TH-abundance stratification was applied prior to receipt
@@ -696,6 +932,36 @@ This yielded:
   \label{eq:gpr}
 \end{equation}
 %
+\begin{revblock}{R2.2,R2.14}
+\textbf{Rationale and adequacy of $\mathcal{G}_{Pr}$.}
+The candidate list was fixed \textit{a priori} from DA-neuron
+biology (Table~\ref{tab:gpr}), and markers were then retained
+only if they were quantified and rose with differentiation.
+The four retained proteins span the dopamine metabolic
+pathway of a functional DA neuron:
+TH converts tyrosine to L-DOPA and is the rate-limiting step of
+dopamine synthesis;
+DDC (aromatic L-amino acid decarboxylase) converts L-DOPA to
+dopamine;
+ALDH1A1 marks the A9 substantia nigra subtype that degenerates
+first in Parkinson's disease;
+and COMT degrades synaptic dopamine.
+$Pr$ therefore measures whether the cells have acquired the
+\textit{enzymatic machinery} of dopamine synthesis and turnover
+--- a functional property that the transcriptomic $D$ score,
+which mixes enzymes with transcription factors (LMX1A, FOXA2)
+and receptor/transporter genes, does not isolate at the protein
+level.
+The set does not represent all of DA identity: the defining
+transcription factors (NR4A2, PITX3, LMX1B) and the membrane
+channel KCNJ6 are below the detection limit of whole-cell
+label-free proteomics (Table~\ref{tab:gpr}), and the dopamine
+transporter (SLC6A3) is not quantified. $Pr$ is thus a marker
+of DA-pathway maturation rather than a complete DA-identity
+score; this is listed as a limitation in
+Section~\ref{sec:limitations}.
+\end{revblock}
+%
 \begin{equation}
   Pr_{t}^{\text{raw}} =
     \frac{1}{|\mathcal{G}_{Pr}|}
@@ -709,16 +975,54 @@ Per-stage means were computed over the canonical CTRL
 replicates (D11: $\mu = 1.83 \pm 3.17$, $n = 3$;
 D30: $\mu = 18.97 \pm 0.01$, $n = 2$;
 D52: $\mu = 25.08 \pm 0.25$, $n = 2$; log$_{2}$ LFQ scale).
-Per-trajectory cell-level $Pr$ values were sampled from
-$\mathcal{N}(\mu_{\text{stage}},\,\sigma_{\text{stage}})$
-to preserve biologically plausible within-stage variance
-(see Section~\ref{sec:ablations} for deterministic
-validation).
+
+\begin{revblock}{R1.2,R2.6,AC}
+\textbf{Assigning $Pr$ to trajectories.}
+Proteomics and scRNA-seq were measured on different cells, so
+no cell has a measured $Pr$ value. Each trajectory $i$ instead
+receives, at each stage $t$, one value drawn independently of
+its $P$ and $D$ values:
+\begin{equation}
+  Pr^{(i)}_{t} \sim
+  \begin{cases}
+    \mathcal{N}\bigl(\mu_{t},\, \sigma_{t}\bigr),
+      & t \in \{\text{D30}, \text{D52}\},\\[2pt]
+    \mathcal{N}\bigl(0,\, \sigma_{\text{D11}}/2\bigr),
+      & t = \text{D11},
+  \end{cases}
+  \label{eq:prsample}
+\end{equation}
+with $(\mu_{t}, \sigma_{t})$ the replicate statistics above.
+D11 is anchored at the detection floor rather than at its
+replicate mean because two of the three iPSC replicates contain
+no $\mathcal{G}_{Pr}$ marker at all and the mean of 1.83 is
+produced by a single TH detection in one replicate
+(Table~\ref{tab:replicates}); a pre-DA stage is expected to sit
+at the floor of the DA-pathway axis. The floor keeps a small
+spread, half the D11 replicate standard deviation
+($\sigma = 1.59$), so that D11 values are not all identical.
+This anchor was used for every result reported, and it
+replaces the description $\mathcal{N}(\mu_{\text{stage}},
+\sigma_{\text{stage}})$ for all stages given in the original
+submission;
+it is shown alongside the replicate data in
+Figure~\ref{fig:replicates}, and because D11 ($\approx 0$)
+and D30 ($\approx 19$) are far apart on the $Pr$ axis under
+either choice, it does not affect the stage ordering that the
+analyses rely on.
+The random draws are made with the run's seed
+(Section~\ref{sec:multiseed}).
+Within-stage sampling preserves a plausible within-stage
+spread; the deterministic ablation
+(Section~\ref{sec:ablations}), which sets every value to the
+stage centre, shows that this spread carries no additional
+signal.
+\end{revblock}
 
 \textbf{Normalisation:}
-All three scores were scaled to $[0,1]$ using min-max bounds
-computed exclusively from the training split to prevent
-data leakage:
+\rev{R2.6,AC}{The $Pr$ score is scaled to $[0,1]$ using min-max
+bounds computed from the training-split trajectories only,
+refitted for every seed:}
 %
 \begin{equation}
   z^{\text{norm}} =
@@ -729,6 +1033,32 @@ data leakage:
     \right)
   \label{eq:norm}
 \end{equation}
+\begin{revblock}{R2.6,AC}
+$P$ and $D$ enter already scaled by the fixed cell-population
+bounds of the baseline (Section~\ref{sec:baseline}); these
+bounds are not refitted per split.
+\textbf{Leakage control.} Three facts limit what the test
+trajectories can contribute to training.
+\textit{(i)} The split is made over whole trajectories, so no
+test trajectory, and none of its three states, is seen during
+training.
+\textit{(ii)} The only fitted preprocessing on $Pr$ (its
+min-max bounds) uses training trajectories only.
+\textit{(iii)} The $P$/$D$ bounds are two fixed constants per
+axis computed without stage labels over all 161,584 cells; a
+fixed monotone rescaling applied identically to every split
+cannot carry label information from test to training data.
+What is shared between training and test trajectories by
+design is the stage-level proteomic distribution of
+Eq.~\eqref{eq:prsample}: every trajectory's $Pr$ at a given
+stage is drawn from the same $(\mu_{t}, \sigma_{t})$, which is
+estimated from the proteomic replicates and from no
+trajectory. Because these stage statistics define where each
+stage sits on the $Pr$ axis, Task~A measures how separable the
+stages are under this representation, not out-of-sample
+prediction of unseen biology (Sections~\ref{sec:loro}
+and~\ref{sec:pronly}).
+\end{revblock}
 
 \textbf{Trajectory assembly:}
 $N = 200$ trajectories were assembled by sampling one cell
@@ -744,10 +1074,25 @@ per timepoint:
 \end{equation}
 %
 yielding a tensor of size $200 \times 3 \times 3$.
+\begin{revblock}{R1.2}
+Concretely, for each trajectory $i$ one cell was drawn
+uniformly at random from the untreated D11 cells, one from
+the D30 cells and one from the D52 cells, independently of
+each other and of the other trajectories; the cell's $P$ and
+$D$ scores form $\mathbf{s}^{(i)}_{t}$ and $Pr^{(i)}_{t}$ is
+added by Eq.~\eqref{eq:prsample}.
+scRNA-seq destroys the cell, so the three cells of a trajectory
+are different cells and a trajectory is a population-level
+pseudo-trajectory, not a lineage-traced path of one cell.
+The 200 $(P, D)$ trajectories are the published tensor of the
+baseline study~\cite{kanu2026transformer} and are identical in
+every run; they are not re-sampled per seed.
+\end{revblock}
 Trajectories were split into train/validation/test sets
-of 140/30/30 using a fixed random seed (42), consistent
-with the 2D baseline described in
-Section~\ref{sec:baseline}, to ensure direct comparability.
+of 140/30/30\rev{R1.4,R2.9}{; the split is redrawn for each of
+the 20 seeds (Section~\ref{sec:multiseed}), and the reference
+seed 42 is the seed used by} the 2D baseline described in
+Section~\ref{sec:baseline}.
 
 % -----------------------------------------------------------------
 \subsection{\textbf{DLT-based provenance for reproducibility}}
@@ -766,10 +1111,8 @@ processing step on a distributed ledger.
 A \texttt{MultiOmicsProvenance} smart contract was deployed
 on the PureChain mainnet (chain ID \texttt{900520900520},
 gas-free EVM, RPC \texttt{https://purechainnode.com}) at
-address \texttt{0xFA954E93c389D54B05FBA832276B7C7a42bAeD51}.
-The contract was compiled with Solidity 0.8.20 using
-\texttt{evmVersion: paris} and \texttt{viaIR: true} to
-target the pre-Shanghai EVM supported by PureChain.
+address \texttt{0xFA954E93c389D54B05FBA832276B7C7a42bAeD51}\rev{R2.24}{
+(compiler and deployment settings: Supplementary Table~S1)}.
 Each data ingestion event (Layer~1, Figure~\ref{fig:pipeline})
 registers: source name and URL, dataset version, access date,
 SHA-256 hash of the raw downloaded file, the list of markers
@@ -786,6 +1129,29 @@ Integrity guarantees hold under the proof-of-authority-and-association (PoA$^2$)
 model of the permissioned chain; the recorded confirmation
 depth quantifies transaction finality rather than a
 proof-of-work attack cost.
+
+\begin{revblock}{R1.11,R2.16}
+\textbf{What the provenance layer does in practice.}
+For a biomedical reader the ledger can be thought of as a
+public, tamper-evident lab notebook for data files. A SHA-256
+fingerprint is a short code computed from every byte of a
+file; changing a single byte produces a completely different
+code. When the pipeline downloads the scRNA-seq or proteomics
+data, it writes the fingerprint, the dataset version, and the
+exact code version (Git commit) to the ledger, where entries
+cannot be edited or deleted afterwards. A reader who wants to
+reproduce or audit the results recomputes the fingerprint of
+their own copy and calls \texttt{verifyIngestion}: a match
+proves they are using byte-identical inputs and code; a
+mismatch reveals at once that a dataset was silently updated,
+re-processed differently, or substituted. This matters most in
+multi-source pipelines such as this one, where two datasets
+from different laboratories, a locally re-processed
+proteomics table, and several derived score files must all
+stay consistent. The layer certifies \textit{which} data and
+code produced a result; it does not certify that the analysis
+itself is correct.
+\end{revblock}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Evaluation protocol}}
@@ -822,12 +1188,15 @@ averaged across state dimensions:
 %
 \begin{equation}
   \text{MAE} =
-    \frac{1}{n}
+    \frac{1}{n\textcolor{red}{k}}
     \sum_{i=1}^{n}
     \bigl\lVert \mathbf{s}^{(i)}_{52} -
                 \hat{\mathbf{s}}^{(i)}_{52} \bigr\rVert_{1}
   \label{eq:mae}
 \end{equation}
+\rev{AC}{where $k$ is the number of state dimensions, so that
+the 2D and 3D errors are both per-dimension averages and
+directly comparable.}
 %
 A per-dimension decomposition is also reported
 (Section~\ref{sec:results}) so that the contribution of the
@@ -839,9 +1208,11 @@ any change in the $P$ and $D$ forecasts.
 Three model families were evaluated under identical splits
 and normalisation for both the 2D baseline and 3D extension
 (Figure~\ref{fig:pipeline}, Layer~3):
-\textit{(i)} Ridge regression ($\alpha = 1.0$),
-\textit{(ii)} Random Forest (100 estimators for Task~A,
-200 for Task~B), and
+\textit{(i)} \rev{AC}{a linear model: multinomial logistic
+regression for Task~A and} Ridge regression ($\alpha = 1.0$)
+\rev{AC}{for Task~B},
+\textit{(ii)} Random Forest (\rev{AC}{200 estimators for both
+tasks}), and
 \textit{(iii)} a Transformer digital twin with the
 architecture described in Section~\ref{sec:baseline}:
 4 encoder layers, 4 attention heads,
@@ -856,17 +1227,42 @@ per-token input feature width.
 
 To replace single-seed point estimates with interval
 estimates, the full Task~A and Task~B benchmark is run across
-20 seeds. Each seed independently parameterises the
-per-trajectory $Pr$ sampling of Eq.~\eqref{eq:Pr}, the
+20 seeds \rev{R1.4,R2.9}{(42--61)}. Each seed independently parameterises the
+per-trajectory $Pr$ sampling of \rev{AC}{Eq.~\eqref{eq:prsample}}, the
 train/validation/test split, the permutation-null shuffles,
 and every model's initialisation. All tabulated quantities
 are reported as mean $\pm$ standard deviation across seeds.
+\rev{R1.4,R2.9}{The seed does \textit{not} change the 200
+$(P, D)$ trajectories, which are fixed (Section~\ref{sec:state}),
+or the proteomic stage statistics.}
 For the 2D$\to$3D Task~B MAE reduction, a one-sided paired
 Wilcoxon signed-rank test ($\mathbf{s}_{3\text{D}} <
 \mathbf{s}_{2\text{D}}$) is applied to the 20 per-seed paired
 differences within each model family, Cohen's $d_{z}$ is
 reported as the paired effect size, and Holm--Bonferroni
 correction is applied across the three model families.
+
+\begin{revblock}{R2.9,R1.4}
+\textbf{Independence of seeds and choice of test.}
+Within a seed, the 2D and 3D models share the same split and
+the same trajectories, so the two MAEs form a natural pair and
+the per-seed difference removes split-to-split variation; this
+is why a paired test is used. Across seeds the draws are made
+with independent random streams, but the runs are not fully
+independent observations: they reuse the same 200 $(P, D)$
+trajectories, the same proteomic statistics, and overlapping
+training sets. The Wilcoxon signed-rank test was chosen
+because it does not assume the 20 paired differences are
+normally distributed, which cannot be checked reliably at
+$n = 20$. Its $p$-values should therefore be read as evidence
+that the 2D$\to$3D difference is robust to the random choices
+of the pipeline (split, $Pr$ draw, initialisation), not as
+inference about new biological samples or new datasets.
+To report the size of the effect with its uncertainty, a 95\%
+confidence interval for the mean paired MAE difference and for
+the relative change is also computed by percentile bootstrap
+over seeds (10,000 resamples, seeds resampled in pairs).
+\end{revblock}
 
 \subsubsection{Permutation nulls}
 
@@ -913,6 +1309,13 @@ held-out fold leaves a single replicate defining the stage
 mean; the probe is therefore a consistency check under the
 available replicate structure rather than a powered
 cross-validation, and is reported as such.
+\rev{R1.3}{In particular, LORO is not an external validation:
+all seven replicates come from one laboratory, one cell line
+and one differentiation protocol, and a held-out replicate is
+still classified against trajectories generated from the same
+study. It shows that the result does not hinge on any single
+replicate; it cannot show that the result transfers to
+independent datasets.}
 
 \subsubsection{Single-feature ($Pr$-only) baseline}
 \label{sec:pronly}
@@ -944,7 +1347,13 @@ reported explicitly rather than left implicit.
     Addition of the proteomic axis resolves the stage ambiguity
     present in the 2D projection.
     $n = 200$ sampled trajectories; colours indicate stage
-    identity (D11 blue, D30 orange, D52 green).}
+    identity (D11 blue, D30 orange, D52 green).
+    \rev{R1.7}{This figure shows the state representations
+    only; model performance under the 2D, 3D, $Pr$-only and
+    permutation-null conditions is reported in
+    Figure~\ref{fig:benchmark} and Table~\ref{tab:taska}. The
+    right panel uses the D11 detection-floor anchor of
+    Eq.~\eqref{eq:prsample}.}}
   \label{fig:scatter}
 \end{figure*}
 
@@ -1004,12 +1413,18 @@ Adding $Pr$ resolves this ambiguity: the proteomics score
 increases monotonically across stages
 (D11: $\mu_{Pr} = 1.83 \pm 3.17$;
 D30: $18.97 \pm 0.01$;
-D52: $25.08 \pm 0.25$; log$_{2}$ LFQ scale),
+D52: $25.08 \pm 0.25$; log$_{2}$ LFQ scale\rev{AC}{; replicate
+statistics, with D11 trajectories drawn at the detection floor
+of Eq.~\eqref{eq:prsample}}),
 producing three visually non-overlapping clusters in 3D.
 Marginal density plots confirm that stage separation along the
 $P$-axis is similar between 2D and 3D; the critical gain is
 along the $Pr$ axis, where all three stages are cleanly
 separated from one another.
+\rev{R1.13}{\textit{Takeaway (Fig.~\ref{fig:scatter}):} the
+transcriptomic plane confuses D11 with D30 and D30 with D52;
+the proteomic axis places the three stages at clearly different
+levels.}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Cross-modal orthogonality and trajectory
@@ -1114,6 +1529,19 @@ monotone stage structure of $Pr$ and not per-cell variance.
 The non-redundancy claim therefore rests on the within-stage
 orthogonality result (Table~\ref{tab:correlations}), not on
 coherence.
+\rev{R1.13}{\textit{Takeaway (Fig.~\ref{fig:corr},
+Tables~\ref{tab:correlations}--\ref{tab:coherence}):} the
+assembled state introduces no within-stage coupling between
+$Pr$ and the transcriptomic axes, and the near-perfect
+coherence is a structural consequence of a monotone $Pr$; the
+evidence that $Pr$ complements $P$ and $D$ is the stage
+information it adds (Section~\ref{sec:res_taska}).}
+\rev{AC}{Because $Pr$ is drawn independently of $P$ and $D$
+within each stage (Eq.~\eqref{eq:prsample}), the near-zero
+within-stage correlations are expected by construction; they
+confirm that the assembled state introduces no spurious
+coupling, while the biological complementarity of $Pr$ rests
+on the between-stage information it carries.}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Benchmark performance}}
@@ -1122,6 +1550,22 @@ coherence.
 Figure~\ref{fig:benchmark} and
 Tables~\ref{tab:taska}--\ref{tab:taskb_perdim} report benchmark
 performance under 2D and 3D state conditions across 20 seeds.
+\rev{R2.23}{The two tasks answer different questions and are
+reported separately. Task~A (stage \textit{classification},
+Section~\ref{sec:res_taska}) asks whether the stages can be told
+apart from a single state vector; it characterises the
+representation. Task~B (trajectory \textit{prediction},
+Section~\ref{sec:res_taskb}) asks how well the late-stage state
+can be forecast from earlier states; it is the forecasting
+question a digital twin is built for. A result on one task
+carries no implication for the other.}
+\rev{R1.7}{Conditions are labelled identically in all tables and
+figures: \textbf{2D} $=(P,D)$; \textbf{3D} $=(P,D,Pr)$;
+\textbf{$Pr$ only} $=$ the single $Pr$ feature;
+\textbf{3D perm across} $=$ 3D with $Pr$ shuffled across stages
+(Task~A null); \textbf{3D perm within} $=$ 3D with $Pr$ shuffled
+within each stage (Task~B null); \textbf{LORO (3D)} $=$ 3D with
+one proteomic replicate held out of the stage statistics.}
 
 \begin{table}[!htbp]
 \caption{%
@@ -1134,7 +1578,11 @@ performance under 2D and 3D state conditions across 20 seeds.
   The $Pr$-only column locates the signal on the single
   monotonic $Pr$ axis; the LORO column (each Dittmar CTRL
   replicate held out from the stage mean) tests generalisation
-  beyond replicates that contributed to the stage definition.}
+  beyond replicates that contributed to the stage definition.
+  \rev{R1.7,R1.8}{Because $Pr$ only equals 3D, the 3D score is
+  evidence of stage separability on the $Pr$ axis, not of model
+  superiority. LORO is mean $\pm$ s.d.\ over the 7 held-out
+  replicates, not over seeds.}}
 \label{tab:taska}
 \centering
 \scalebox{0.74}{
@@ -1179,12 +1627,23 @@ LORO (3D)
     Collapse of 3D performance to near-chance under
     \texttt{perm\_across} confirms the separability lift
     arises from real proteomic-stage signal.
-    $n = 30$ held-out test trajectories.}
+    $n = 30$ held-out test trajectories.
+    \rev{R1.7}{Condition labels follow
+    Section~\ref{sec:res_bench}: ``3D perm across'' is the
+    Task~A null and ``3D perm within'' the Task~B null. The
+    $Pr$-only and LORO conditions are not drawn because they
+    equal the 3D bars exactly (F1 $= 1.000$ in every run); their
+    values are in Table~\ref{tab:taska}. Panel~(B) shows the
+    overall MAE; its per-dimension breakdown is in
+    Table~\ref{tab:taskb_perdim}. Model labels: the linear model
+    is logistic regression in (A) and Ridge regression in (B).}}
   \label{fig:benchmark}
 \end{figure*}
 
 
-\subsubsection{Task A: stage separability}
+\subsubsection{\rev{R2.23}{Stage classification (Task~A): a
+separability check}}
+\label{sec:res_taska}
 
 In the 2D state, all models perform near the three-class chance
 level of 0.33 (macro F1 $0.40$--$0.49$), confirming that
@@ -1208,10 +1667,14 @@ demonstrate.
   One-sided paired Wilcoxon signed-rank ($3\text{D} < 2\text{D}$)
   with Holm--Bonferroni correction across the three model
   families; Cohen's $d_{z}$ is the paired effect size.
-  Lower is better.}
+  Lower is better.
+  \rev{R1.4,R2.13}{95\% CIs are paired percentile-bootstrap
+  intervals over the 20 seeds (10,000 resamples). The reduction
+  comes from the added $Pr$ dimension; the $P$/$D$ errors are
+  unchanged (Table~\ref{tab:taskb_perdim}).}}
 \label{tab:taskb}
 \centering
-\scalebox{0.74}{
+\scalebox{0.66}{
 \begin{tabular}{lccc}
 \toprule
 Metric & Ridge & RF & Transformer \\
@@ -1225,8 +1688,17 @@ Metric & Ridge & RF & Transformer \\
   & $0.0627 \pm 0.0047$ & $0.0655 \pm 0.0063$ & $0.0670 \pm 0.0054$ \\
 $\Delta$ MAE
   & $-0.0279$ & $-0.0285$ & $-0.0256$ \\
+\textcolor{red}{\rtag{R1.4}95\% CI}
+  & \textcolor{red}{$[-0.0289, -0.0269]$} & \textcolor{red}{$[-0.0306, -0.0263]$}
+  & \textcolor{red}{$[-0.0282, -0.0231]$} \\
 $\Delta$\%
   & $-31\%$ & $-30\%$ & $-28\%$ \\
+\textcolor{red}{\rtag{R1.4}95\% CI}
+  & \textcolor{red}{$[-31.0, -30.6]\%$} & \textcolor{red}{$[-31.9, -28.8]\%$}
+  & \textcolor{red}{$[-29.8, -25.6]\%$} \\
+\textcolor{red}{\rtag{R1.4}3D better}
+  & \textcolor{red}{20/20 seeds} & \textcolor{red}{20/20 seeds}
+  & \textcolor{red}{20/20 seeds} \\
 $d_{z}$
   & $-12.04$ & $-5.49$ & $-4.31$ \\
 $p_{\text{Holm}}$
@@ -1267,12 +1739,37 @@ axis carries stage-discriminating information orthogonal to the
 transcriptomic axes (Table~\ref{tab:correlations}), rather than
 as a predictive achievement in its own right.
 The modelling value of the 3D state is established by Task~B.
+\begin{revblock}{R2.12,R1.8,R1.5}
+We state this explicitly: stage discrimination in the 3D model
+is driven by the $Pr$ axis. The perfect F1 is not evidence that
+any model family, or the combination of modalities, is superior
+for classification; a one-feature threshold on $Pr$ does equally
+well. It is also expected rather than surprising, because the
+stage centres on $Pr$ (D11 at the floor, D30 $\approx 19$,
+D52 $\approx 25$) are far apart compared with the within-stage
+spread. That spread is estimated from only 3/2/2 replicates;
+the D30 s.d.\ of 0.01 from two replicates almost certainly
+understates the true biological variability. With more
+replicates and wider within-stage distributions the stages would
+overlap more on $Pr$, and F1 would be expected to fall below
+1.000. The Task~A result should therefore be generalised beyond
+this dataset with caution.
+\textit{Takeaway (Table~\ref{tab:taska},
+Fig.~\ref{fig:benchmark}A):} the stages that the transcriptomic
+scores confuse become separable once $Pr$ is added; all of this
+separability sits on the $Pr$ axis and disappears when the
+stage--$Pr$ link is broken.
+\end{revblock}
 
-\subsubsection{Task B: trajectory prediction}
+\subsubsection{\rev{R2.23}{Trajectory prediction (Task~B)}}
+\label{sec:res_taskb}
 
 The 3D state reduces overall MAE by 28--31\% across all model
 families (Ridge $-31\%$, Random Forest $-30\%$, Transformer
-$-28\%$; Table~\ref{tab:taskb}).
+$-28\%$; Table~\ref{tab:taskb})\rev{R1.4}{, with 95\% bootstrap
+confidence intervals of $[-31.0, -30.6]\%$, $[-31.9, -28.8]\%$
+and $[-29.8, -25.6]\%$ respectively; 3D had the lower MAE in all
+20 seeds for every model}.
 All three reductions are significant under a one-sided paired
 Wilcoxon signed-rank test after Holm--Bonferroni correction
 ($p < 10^{-3}$), with large paired effect sizes
@@ -1325,6 +1822,20 @@ Ridge and Random Forest; $0.015$ for the Transformer).
 The aggregate improvement therefore reflects the inclusion of a
 cleanly forecastable proteomic dimension rather than improved
 forecasting of $P$ and $D$.
+\begin{revblock}{R2.13,R1.9}
+The paired 95\% bootstrap intervals for the change in
+$\text{MAE}_{PD}$ between 3D and 2D all include zero (Ridge
+$[-0.0001, 0.0001]$, Random Forest $[-0.0014, 0.0028]$,
+Transformer $[-0.0019, 0.0021]$). Adding $Pr$ thus neither helps
+nor hurts the transcriptomic forecasts. The lower overall MAE
+must not be read as better prediction of the original
+transcriptomic dimensions: because Eq.~\eqref{eq:mae} averages
+over dimensions, appending a third dimension that is forecast
+with very low error lowers the average even when the first two
+errors are unchanged. It is low largely because $Pr$ at D52 is
+drawn around a fixed stage centre (Eq.~\eqref{eq:prsample}), so
+its forecast is close to that centre.
+\end{revblock}
 The contribution of the 3D state to Task~B is thus twofold:
 $Pr$ is a biologically meaningful, well-forecastable auxiliary
 target, and its addition does not degrade the existing $P$ and
@@ -1335,6 +1846,11 @@ linear and ensemble models) is consistent with the
 200-trajectory dataset being too small for a 4-layer attention
 model to outperform a regularised linear baseline on a simple
 monotone target.
+\rev{R1.13}{\textit{Takeaway (Tables~\ref{tab:taskb}--\ref{tab:taskb_perdim},
+Fig.~\ref{fig:benchmark}B):} the 3D state lowers overall
+forecasting error by 28--31\% for every model and seed; the
+whole gain comes from the added, easily forecast $Pr$
+dimension, and the $P$ and $D$ forecasts are unchanged.}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Sensitivity ablations}}
@@ -1402,6 +1918,9 @@ A transcript-derived proxy therefore does not substitute for
 measured phosphoproteomics; the result motivates direct
 phosphoproteomic profiling as the genuine fourth dimension
 in subsequent work.
+\rev{R1.13}{\textit{Takeaway (Table~\ref{tab:ablations}):} the
+proteomic signal is entirely stage-level, and a transcript-based
+kinase proxy cannot stand in for a measured fourth dimension.}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{PureChain blockchain provenance
@@ -1420,21 +1939,20 @@ Metric & Value \\
 Inputs registered on-chain       & 2 \\
 Hash match rate                  & 100.0\% \\
 Audit trail completeness         & 100\% \\
-SHA-256 throughput               & 298\,MB/s \\
-Per-source latency (Novak)       & 33\,ms \\
-Per-tx gas (Jerber / Novak)      & 405,683 / 472,168 \\
 Per-tx cost                      & 0\,PCG (gas-free) \\
 Block time / reg.\ latency       & $\sim$1.0\,s/block (1-block confirm) \\
 \texttt{verifyIngestion} latency & 50\,ms (median, $n=5$) \\
 Tamper-detection                 & Pass (mutated hash $\to$ False) \\
-Confirmation depth               & 72,011 blocks since registration \\
 Contract address                 & \texttt{0xFA954E93\ldots bAeD51}\textsuperscript{$\ddagger$} \\
-Chain ID                         & 900520900520 \\
-Contract bytecode                & 4,716 bytes \\
 \bottomrule
 \multicolumn{2}{l}{%
   \textsuperscript{$\ddagger$}Full address:
-  \texttt{0xFA954E93c389D54B05FBA832276B7C7a42bAeD51}.}
+  \texttt{0xFA954E93c389D54B05FBA832276B7C7a42bAeD51}.} \\
+\multicolumn{2}{l}{%
+  \rev{R2.24}{Throughput, gas, chain ID, bytecode size and
+  confirmation}} \\
+\multicolumn{2}{l}{%
+  \textcolor{red}{depth: Supplementary Table~S1.}}
 \end{tabular}}
 \end{table}
 
@@ -1457,6 +1975,9 @@ model of the permissioned chain; the confirmation depth of
 proof-of-work attack cost.
 All provenance records are permanently queryable at the deployed
 contract address without author involvement.
+\rev{R1.13}{\textit{Takeaway (Table~\ref{tab:provenance}):} both
+input datasets are fingerprinted on-chain, any change to them is
+detected, and verification costs nothing and takes milliseconds.}
 
 %% ============================================================
 %%  DISCUSSION
@@ -1466,33 +1987,66 @@ contract address without author involvement.
 \subsection{\textbf{Proteomics resolves transcriptomic
 ambiguity}}
 
-The central finding of this study is that a
-proteomics-integrated 3D state space $(P, D, Pr)$ resolves
-stage ambiguity that the transcriptomic-only 2D state cannot.
-Three classifiers separate the stages perfectly under the
-canonical mapping, and the diagnostics of
-Section~\ref{sec:res_bench} establish that the separability is
-genuine: the \texttt{perm\_across} null collapses it to the 2D
-range, the LORO probe shows it generalises to held-out
-replicates, and the $Pr$-only baseline locates it on the single
-monotonic proteomic axis.
-Together these show that the $Pr$ dimension encodes real
-stage-discriminating biological information rather than noise,
-model capacity, or a label reconstructed from its own defining
-statistics.
-This validates the core motivation: while transcriptomics
-captures gene expression, drug-relevant phenotypes are executed
-at the protein level, and the gap between mRNA and protein
-abundance is well-documented in dopaminergic
-contexts~\cite{novak2022single,cavarischia2024proteome}.
-The four selected markers --- TH, DDC, ALDH1A1, and COMT ---
-are functionally active components of the dopamine synthesis and
-catabolism pathway, making their inclusion biologically
-interpretable rather than empirically opportunistic.
-The modelling contribution of the 3D state, distinct from this
-separability, is established on Task~B, where adding $Pr$ lowers
-trajectory-prediction MAE by 28--31\% without degrading the
-forecasts of the original transcriptomic dimensions.
+\begin{revblock}{R1.14,R2.14}
+The central finding is that adding a measured proteomic axis
+resolves stage ambiguity that the transcriptomic state cannot:
+the D30 peak of the $D$ score makes D30 and D52 hard to tell
+apart from transcripts, whereas the DA-pathway proteins keep
+rising from D25 to D40 (Table~\ref{tab:gpr}).
+The complementarity is biological as well as statistical.
+The $D$ score records whether DA-lineage \textit{genes} are
+transcribed, including transcription factors whose expression
+is transient; $Pr$ records whether the cells have accumulated
+the \textit{enzymes} that make and degrade dopamine --- TH and
+DDC for synthesis, COMT for catabolism --- and, through ALDH1A1,
+whether they have acquired the A9 substantia nigra phenotype
+lost in Parkinson's disease. Protein abundance can keep rising
+after transcript levels plateau or fall, so $Pr$ can reflect
+functional maturation that transcript-based scores do not,
+consistent with the weak mRNA--protein correlation reported in
+DA contexts~\cite{novak2022single,cavarischia2024proteome}.
+These are also the proteins through which many
+dopaminergic drugs act (e.g.\ DDC and COMT inhibitors used in
+Parkinson's therapy), which is why a protein-level axis is
+needed for the drug-screening use the framework is ultimately
+aimed at.
+\end{revblock}
+
+\subsection{\rev{R2.15,R1.10}{\textbf{What the validation
+experiments establish}}}
+\label{sec:disc_validation}
+
+\begin{revblock}{R2.15,R1.10}
+The main strength of the study is less the headline scores
+than the set of controls designed to rule out the ways those
+scores could be misleading. Each control answers one question:
+\begin{itemize}
+  \item \textbf{\texttt{perm\_across} null} --- could the 3D
+    gain on Task~A be produced simply by giving the model an
+    extra input? No: with the stage--$Pr$ link broken, F1 falls
+    back to the 2D level.
+  \item \textbf{\texttt{perm\_within} null} --- does cell-level
+    $Pr$ variation matter, or only the stage level? Only the
+    stage level: shuffling within stages changes neither F1 nor
+    MAE.
+  \item \textbf{$Pr$-only baseline} --- where does the
+    separability come from? Entirely from the $Pr$ axis.
+  \item \textbf{LORO probe} --- does separability depend on
+    any single proteomic replicate? No, within this dataset;
+    it is a consistency check, not an external validation.
+  \item \textbf{Per-dimension MAE} --- does the Task~B gain
+    reflect better transcriptomic forecasts? No: $P$ and $D$
+    errors are unchanged and the gain is the added $Pr$ column.
+  \item \textbf{20 seeds, paired tests, bootstrap CIs} --- is
+    the Task~B gain an artefact of one split or
+    initialisation? No: it holds in all 20 seeds with narrow
+    intervals.
+\end{itemize}
+Taken together, these controls turn the two headline numbers
+into precisely bounded claims: the proteomic axis carries the
+stage signal, and adding it does not disturb the
+transcriptomic forecasts.
+\end{revblock}
 
 \subsection{\textbf{Methodological robustness of the
 sample-identity strategy}}
@@ -1533,49 +2087,111 @@ differentiation.
 \subsection{\textbf{Blockchain provenance as reproducibility
 infrastructure}}
 
-The provenance layer addresses a recognised gap in multi-source
-computational biology pipelines.
-A scoping review of 44 biomedical provenance studies found that
-most existing systems record ``where'' provenance (source
-tracking) without ``how'' provenance (pipeline version
-anchoring)~\cite{johns2023data}.
-The implementation here records both: the SHA-256 of every raw
-input file and the Git commit hash of the processing code at
-every pipeline run.
-The tamper-detection demonstration --- a single-bit hash
-perturbation returning \texttt{matched = False} --- confirms the
-audit-trail mechanism operates as claimed rather than as
-theoretical infrastructure.
-The gas-free deployment removes the cost barrier that has
-limited blockchain adoption in academic settings.
-Integrity holds under the chain's proof-of-authority trust
-model; this is a deliberate scope choice, positioning the
-contribution as functional provenance infrastructure rather than
-a security claim against an adversarial public network.
+\begin{revblock}{R1.14,R2.16}
+Most biomedical provenance systems record where data came from
+but not how they were processed~\cite{johns2023data}; the layer
+here records both, the fingerprint of every input file and the
+code version of every run. Its practical value in this study
+is concrete: the proteomic input exists in two versions (a local
+re-processing and the authors' canonical table), the stage
+mapping changed during the project, and the transcriptomic and
+proteomic data come from different laboratories. Without a
+fixed record, a reader could not tell which of these versions
+produced a published number; with it, any reader can check in
+milliseconds and at no cost that their files are the ones used.
+Integrity holds under the permissioned chain's
+proof-of-authority trust model, so the contribution is
+verifiable provenance infrastructure, not a security guarantee
+against an adversarial public network, and it is secondary to
+the modelling results.
+\end{revblock}
 
 \subsection{\textbf{Limitations}}
+\label{sec:limitations}
 
-Four limitations bound the current work.
-First, $\mathcal{G}_{Pr}$ coverage is 4 of 6 intended markers;
+\begin{revblock}{R1.5,R2.8,R2.18}
+\textit{(1) Very few proteomic replicates.} The proteomic axis
+rests on $n = 3/2/2$ CTRL replicates. With two replicates, a
+standard deviation is barely estimable: the D30 value of 0.01
+almost certainly understates true biological variability, and
+the D11 mean is driven by a single TH detection in one of three
+replicates. Every trajectory's $Pr$ is drawn from these
+estimates, so the within-stage spread of $Pr$, and with it the
+perfect Task~A separability and the low $\text{MAE}_{Pr}$, depend
+on them. The LORO probe and the 20 seeds show that the results
+are stable to removing any one replicate and to the pipeline's
+random choices, but they cannot correct biased variance
+estimates. A powered CTRL time course ($n \geq 6$ per stage) is
+needed to establish how well the stages separate biologically.
+\end{revblock}
+
+\begin{revblock}{R2.17}
+\textit{(2) Cross-study integration.} Transcriptomics and
+proteomics come from different laboratories, cell lines,
+protocols, and sampling days, so stage-matched values are
+paired at the population level, not measured in the same cells
+or the same cultures. Laboratory and batch effects, protocol
+differences, and the 5--12-day offsets between matched stages
+(and the iPSC-versus-progenitor mismatch at the first stage)
+may shift the proteomic values relative to the transcriptomic
+ones. Because $Pr$ is drawn independently of $P$ and $D$, the
+model cannot learn any cell-level relation between the
+modalities, and the within-stage orthogonality is a property of
+the construction rather than a biological finding. Paired
+multi-omic measurements from the same cultures would remove
+this limitation.
+\end{revblock}
+
+\begin{revblock}{R2.19}
+\textit{(3) No external validation.} All results come from one
+scRNA-seq dataset and one proteomic dataset. The framework has
+not been tested on independent datasets, other iPSC lines, or
+other DA differentiation protocols, and its generalisability
+remains to be established. The 200 trajectories are
+pseudo-trajectories built from independent cells rather than
+lineage-traced paths, and are fixed across seeds.
+\end{revblock}
+
+\begin{revblock}{R1.8,R2.12}
+\textit{(4) Task~A measures separability, not prediction.}
+Because the stage signal resides on the single $Pr$ axis, Task~A
+shows that the representation separates the stages; it does not
+show that the 3D models classify better. The forecasting
+contribution of the framework is measured by Task~B, and there
+the gain is confined to the added $Pr$ dimension.
+\end{revblock}
+
+\rev{AC}{\textit{(5) Marker coverage.}}
+$\mathcal{G}_{Pr}$ coverage is \rev{AC}{4 of the 9 candidate
+markers in Table~\ref{tab:gpr}};
 NR4A2, PITX3, and LMX1B remain below the detection limit of
 standard whole-cell-lysate LFQ, a constraint confirmed
 independently in the 9,409-protein Cavarischia-Rega
 dataset~\cite{cavarischia2024proteome}.
 Nuclear-enriched or targeted mass-spectrometry workflows are
 required to recover these transcription factors.
-Second, the canonical CTRL proteomic replicates are $n = 3/2/2$
-per stage; while the LORO probe shows the separability is stable
-under this structure, a genuinely powered $n \geq 6$ CTRL-only
-iPSC-DA proteomic time course would tighten the $Pr$ variance
-estimates and is a clear Paper~2 direction.
-Third, because the stage signal resides on the single monotonic
-$Pr$ axis, Task~A is a separability check rather than a
-predictive task; the forecasting contribution of the framework
-rests on Task~B.
-Fourth, phosphoproteomics is represented by a transcript-derived
-proxy that the $K_t$ ablation confirms adds no predictive value;
-measured phosphoproteomic data is required to test whether a
-genuine fourth state dimension is informative.
+
+\begin{revblock}{R1.12}
+\textit{(6) No measured phosphoproteomics.} Signalling state is
+represented only by a transcript-derived kinase proxy, which the
+$K_t$ ablation shows adds no predictive value. Kinase and
+phosphatase activity is a protein-level, post-translational
+property that neither transcripts nor total-protein abundance
+capture, and it is where many neuroprotective drug candidates
+act. A phosphoproteomic time course matched to the D11/D30/D52
+protocol is therefore the most important extension of the state
+space, and would test whether a measured fourth dimension
+improves forecasting where the transcript proxy did not.
+\end{revblock}
+
+\begin{revblock}{R2.20}
+\textit{(7) Drug-perturbation use is not yet validated.} No drug
+perturbation was modelled or tested in this study. The
+applications to perturbation prediction and virtual screening
+discussed below are prospective; they would require
+perturbation data for training and experimental validation of
+predicted responses before any use in drug development.
+\end{revblock}
 
 \subsection{\textbf{Future directions}}
 
@@ -1585,15 +2201,22 @@ The immediate extension is a drug perturbation encoder $\delta$
 that conditions the Transformer DT on a drug identity and
 concentration at D30, predicting the resulting D52 state under
 pharmacological intervention.
-This maps directly to virtual drug screening for Parkinson's
+\rev{R2.20}{If such a model were trained on perturbation data
+and its predictions confirmed experimentally, it could support}
+virtual drug screening for Parkinson's
 disease: candidate compounds targeting the dopamine synthesis
 pathway could be ranked by the proximity of their predicted D52
-states to a target therapeutic phenotype before any wet-lab
-experiment is conducted.
+states to a target therapeutic phenotype\rev{R2.20}{, to
+prioritise --- not replace --- wet-lab experiments. None of
+these steps has been validated yet}.
 Achieving a genuine 4D state $[P, D, Pr, Ph]$ requires a
 phosphoproteomic time course matched to the D11/D30/D52
 protocol --- a direction enabled by the reproducible,
-provenance-tracked pipeline established in this work.
+provenance-tracked pipeline established in this work
+\rev{R1.12}{(Limitation~6)}.
+\rev{R2.17,R2.19}{Validation on paired transcriptomic and
+proteomic measurements from the same cultures, and on
+independent cell lines and protocols, is the other priority.}
 
 
 
@@ -1613,30 +2236,52 @@ $(P, D, Pr)$ by integrating measured proteomics from a
 public iPSC-DA dataset, and deployed a PureChain blockchain
 provenance layer to record immutable SHA-256 audit trails
 for all data sources and processing steps.
-The proteomics-integrated 3D state space cleanly separates
-the three differentiation stages (macro F1 $= 1.000$ across
-all three model families over 20 seeds) and reduces
-trajectory-prediction MAE by 28--31\% over the transcriptomic
-baseline (paired Wilcoxon $p < 10^{-3}$, Holm-corrected).
-Permutation, leave-one-replicate-out, and single-feature
-analyses together confirmed that the separability arises from
-genuine proteomic-stage signal localised on the $Pr$ axis
-rather than from added model capacity or a label reconstructed
-from its own defining statistics, and cross-modal Spearman
-correlation analysis ($|\rho| \leq 0.08$ at every stage)
-confirmed that the proteomic dimension carries independent
-biological information not captured by gene expression alone.
-A per-dimension decomposition showed that the trajectory-prediction
-gain reflects the addition of a cleanly forecastable proteomic
-dimension and does not degrade the forecasts of the original
-transcriptomic axes.
-A transcript-derived kinase activity proxy was shown to add
-no predictive value, motivating measured phosphoproteomics
-as the genuine fourth state dimension in future work.
-The reproducible, blockchain-secured 3D framework
-established here provides the representational foundation
-for perturbation-aware digital twin drug screening in the
-context of Parkinson's disease.
+\begin{revblock}{R1.8,R1.9,R1.5,R1.14}
+The 3D state separates the three differentiation stages
+perfectly (macro F1 $= 1.000$ for all three model families over
+20 seeds), but a $Pr$-only classifier does the same, so this is
+evidence that the proteomic axis carries the stage signal, not
+that the 3D models are superior classifiers.
+On trajectory prediction, the 3D state lowers MAE by 28--31\%
+(95\% bootstrap CIs within $-25.6\%$ to $-31.9\%$; paired
+Wilcoxon $p < 10^{-3}$, Holm-corrected). This improvement
+comes from adding a well-forecastable proteomic dimension: the
+$P$ and $D$ forecasts are unchanged.
+Permutation nulls, leave-one-replicate-out, and the
+single-feature baseline show that these results reflect genuine
+stage-level proteomic signal rather than added model capacity,
+and a transcript-derived kinase proxy added no value,
+motivating measured phosphoproteomics as the next state
+dimension.
+Because the proteomic axis rests on only 3/2/2 control
+replicates from a separate study, these findings need
+confirmation on paired, larger, and independent datasets before
+the framework is used for perturbation-aware drug screening in
+Parkinson's disease.
+\end{revblock}
+%%────────────────────────────────────────────────────────────────────
+%% TODO(authors): github.com/xaviwho/stem-multi-omics is currently PRIVATE.
+%% Make it public (or replace with a Zenodo DOI) before resubmission.
+\section*{\rev{R2.7}{Code and data availability}}
+
+\begin{revblock}{R2.7}
+The complete source code, configuration files, and scripts that
+regenerate every table and figure in this paper (including the
+per-replicate analysis and bootstrap confidence intervals added
+in this revision) are publicly available at
+\url{https://github.com/xaviwho/stem-multi-omics}.
+The repository pins the exact software versions used
+(\texttt{requirements.txt}).
+The scRNA-seq data are available from ENA (\texttt{PRJEB38269})
+and Zenodo (\texttt{doi:10.5281/zenodo.4333872}); the proteomic
+raw files from PRIDE (\texttt{PXD028283}). The canonical
+\texttt{proteinGroups} table with sample labels was provided by
+the authors of~\cite{novak2022single} and is available from
+them on request. SHA-256 fingerprints of both input datasets
+are recorded on PureChain at the contract address given in
+Section~\ref{sec:dlt}.
+\end{revblock}
+
 %%────────────────────────────────────────────────────────────────────
 \section*{Acknowledgment}
 
@@ -1649,6 +2294,4 @@ This work was partly supported by Innovative Human Resource Development for Loca
 \vspace{-0.3cm}
 \bibliography{newref}
 \vspace{-0.3cm}
-\end{document}
-
 \end{document}
