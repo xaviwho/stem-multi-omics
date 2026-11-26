@@ -181,7 +181,9 @@ def plot(rep: pd.DataFrame, summ: pd.DataFrame, out_base: Path) -> None:
             jitter = (np.linspace(-0.12, 0.12, n) if n > 1 else np.zeros(1)) + rng.uniform(-0.01, 0.01, n)
             xs = x_of[st] + jitter
             ys = sub[col].to_numpy(dtype=float)
-            det = sub[det_col].to_numpy(dtype=bool) if det_col else np.ones(n, bool)
+            # Pr: "detected" = at least one marker detected (Pr = 0 means none were)
+            det = (sub[det_col].to_numpy(dtype=bool) if det_col
+                   else sub["n_markers_detected"].to_numpy() > 0)
             # detected: filled; not detected (LFQ = 0): hollow, drawn at 0
             ax.scatter(xs[det], ys[det], s=46, marker=STAGE_MARKERS[st], color=STAGE_COLORS[st],
                        edgecolor="white", linewidth=1.2, zorder=3)
