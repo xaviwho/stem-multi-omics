@@ -472,7 +472,7 @@ The figure shows that replicate agreement differs sharply by stage: the two D25 
 The paired 95\% bootstrap intervals for the change in $\text{MAE}_{PD}$ between 3D and 2D all include zero (Ridge $[-0.0001, 0.0001]$, Random Forest $[-0.0014, 0.0028]$, Transformer $[-0.0019, 0.0021]$). Adding $Pr$ thus neither helps nor hurts the transcriptomic forecasts. The lower overall MAE must not be read as better prediction of the original transcriptomic dimensions: because Eq.~9 averages over dimensions, appending a third dimension that is forecast with very low error lowers the average even when the first two errors are unchanged. It is low largely because $Pr$ at D52 is drawn around a fixed stage centre (Eq.~6), so its forecast is close to that centre.
 \end{revised}
 
-\point{\loc{Q6, item 1} The authors should highlight how proteomic information complements the existing transcriptomic state space, particularly the biological relevance of the four selected markers in dopaminergic differentiation.}
+\point{The authors should highlight how proteomic information complements the existing transcriptomic state space, particularly the biological relevance of the four selected markers in dopaminergic differentiation.}
 
 \reply{Section~5.1 now explains the complementarity in biological terms: the transcriptomic $D$ score records whether DA-lineage genes are transcribed, whereas $Pr$ records whether the cells have accumulated the enzymes that make and degrade dopamine and whether they have acquired the A9 phenotype lost in Parkinson's disease. The biological role of each marker is given in Section~3.3 (reproduced under Review~2.2).}
 
