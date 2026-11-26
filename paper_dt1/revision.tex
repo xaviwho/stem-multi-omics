@@ -47,64 +47,37 @@
 
 
 \begin{abstract}
-Transcriptomic digital twins are computational models designed
-to mirror and forecast stem cell behaviour, but they lack the
-protein-level information that is critical for Parkinson's
-disease drug development.
-We extend a two-dimensional transcriptomic state
-space, comprising a pluripotency score $P_{t}$ and
-a dopaminergic differentiation score $D_{t}$, to a
-three-dimensional proteomics-integrated state
-$\mathbf{s}_{t} = [P_{t}, D_{t}, Pr_{t}]$ by
-adding a protein abundance score $Pr_{t}$ derived
-from label-free mass-spectrometry proteomics of
-induced pluripotent stem cell-derived dopaminergic
-(iPSC-DA) neurons.
-\rev{R1.1,R2.1}{The primary objective is to construct and
-validate this proteomics-integrated state representation;
-stage separability and trajectory prediction are the two
-tests used to evaluate it, and blockchain provenance is
-supporting reproducibility infrastructure.}
-Data provenance is secured by a
-\texttt{MultiOmicsProvenance} smart contract
-deployed on PureChain, a lightweight gas-free, permissioned
-blockchain that records immutable SHA-256
-fingerprints for every data source and processing
-step.
-Across 200 sampled trajectories from a public
-iPSC-DA single-cell RNA sequencing dataset
-(161,584 cells; stages D11, D30, D52), the 3D
-state separates the three differentiation stages
-(macro F1 $= 1.000$ across all three model families
-over 20 seeds on $n = 30$ held-out trajectories);
-permutation, leave-one-replicate-out, and
-single-feature analyses confirm the separability
-reflects genuine proteomic-stage signal localised on
-the $Pr_{t}$ axis rather than added model capacity.
-\rev{R1.8,R2.12}{Because a $Pr_{t}$-only classifier
-reaches the same score, this result is evidence of stage
-separability along the proteomic axis, not of model
-superiority.}
-On trajectory prediction, the 3D state reduces mean
-absolute error by 28--31\% over the transcriptomic
-baseline across all model families (paired Wilcoxon
-$p < 10^{-3}$, Holm-corrected\rev{R1.4}{; 95\% bootstrap
-confidence intervals from $-25.6\%$ to $-31.9\%$}).
-\rev{R1.9,R2.13}{This reduction comes from adding a
-well-forecastable proteomic dimension: the errors on the
-original $P_{t}$ and $D_{t}$ axes are unchanged.}
-\rev{R1.5,R2.8}{All proteomic conclusions rest on only
-3/2/2 control replicates per stage and should be read
-with that limitation in mind.}
-Cross-modal Spearman correlations
-($|\rho| \leq 0.08$ at every stage) confirm
-that \rev{AC}{the assembled state introduces no spurious
-within-stage coupling between $Pr_{t}$ and $P_{t}$, $D_{t}$}.
-The blockchain-secured, reproducible framework
-provides \rev{R2.20}{a possible} foundation for
-perturbation-aware virtual drug screening in
-Parkinson's disease\rev{R2.20}{, which has not yet been
-validated experimentally}.
+\color{red}
+\rtag{R1.1,R2.1,R1.14}\textbf{Background and Objectives:}
+Transcriptomic digital twins of stem cell differentiation omit
+the protein layer, where drug targets act. We construct and
+validate a proteomics-integrated state representation for
+dopaminergic differentiation of induced pluripotent stem cells
+(iPSC-DA).
+
+\noindent\textbf{Methods:}
+A published transcriptomic state (pluripotency $P_{t}$,
+dopaminergic score $D_{t}$; 161,584 cells, stages D11, D30, D52)
+was extended with a proteomic score $Pr_{t}$ from TH, DDC,
+ALDH1A1, and COMT abundance in a separate iPSC-DA proteomics
+study (3/2/2 control replicates per stage). Three model families
+were tested on stage separability and trajectory prediction over
+20 seeds, with permutation nulls, a $Pr$-only baseline, and
+leave-one-replicate-out analysis. Input fingerprints were
+recorded on a blockchain for verifiable provenance.
+
+\noindent\rtag{R1.8,R2.12,R1.4,R1.9,R2.13}\textbf{Results:}
+The 3D state separated the stages perfectly (macro F1 $= 1.000$),
+as did $Pr_{t}$ alone, indicating separability along the
+proteomic axis rather than model superiority. Trajectory-prediction
+error fell by 28--31\% (95\% CIs within $-25.6\%$ to $-31.9\%$;
+$p < 10^{-3}$), entirely through the added $Pr_{t}$ dimension;
+$P_{t}$ and $D_{t}$ errors were unchanged.
+
+\noindent\rtag{R1.5,R2.8,R2.20}\textbf{Conclusions:}
+Proteomics adds stage information missing from transcriptomics.
+With few replicates from a separate study, confirmation on paired,
+larger datasets is needed before use in drug screening.
 \end{abstract}
 
 \begin{keyword}
