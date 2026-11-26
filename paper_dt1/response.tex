@@ -152,7 +152,7 @@ with $(\mu_{t}, \sigma_{t})$ the replicate statistics above. D11 is anchored at 
 [\ldots] Concretely, for each trajectory $i$ one cell was drawn uniformly at random from the untreated D11 cells, one from the D30 cells and one from the D52 cells, independently of each other and of the other trajectories; the cell's $P$ and $D$ scores form $\mathbf{s}^{(i)}_{t}$ and $Pr^{(i)}_{t}$ is added by Eq.~6. scRNA-seq destroys the cell, so the three cells of a trajectory are different cells and a trajectory is a population-level pseudo-trajectory, not a lineage-traced path of one cell. The 200 $(P, D)$ trajectories are the published tensor of the baseline study and are identical in every run; they are not re-sampled per seed.
 \end{revised}
 
-\point{\loc{Q2, item 3} Since the proteomics data have a small CTRL replicate count, the authors should clearly mention that the LORO analysis is a useful consistency check but not a fully powered external validation.}
+\point{ Since the proteomics data have a small CTRL replicate count, the authors should clearly mention that the LORO analysis is a useful consistency check but not a fully powered external validation.}
 
 \reply{Agreed. The LORO subsection now states explicitly that LORO is not an external validation, and why. The same wording is used in the new summary of validation experiments (Section~5.2), and the absence of external validation is a separate limitation (Limitation~3, Section~5.6).}
 
