@@ -503,11 +503,11 @@ Most biomedical provenance systems record where data came from but not how they 
 \textit{(2) Cross-study integration.} Transcriptomics and proteomics come from different laboratories, cell lines, protocols, and sampling days, so stage-matched values are paired at the population level, not measured in the same cells or the same cultures. Laboratory and batch effects, protocol differences, and the 5--12-day offsets between matched stages (and the iPSC-versus-progenitor mismatch at the first stage) may shift the proteomic values relative to the transcriptomic ones. Because $Pr$ is drawn independently of $P$ and $D$, the model cannot learn any cell-level relation between the modalities, and the within-stage orthogonality is a property of the construction rather than a biological finding. Paired multi-omic measurements from the same cultures would remove this limitation.
 \end{revised}
 
-\point{\loc{Q7, item 2} The limited number of biological replicates in the proteomic dataset, particularly at D30 and D52, may affect the stability of the statistical estimates.}
+\point{ The limited number of biological replicates in the proteomic dataset, particularly at D30 and D52, may affect the stability of the statistical estimates.}
 
 \reply{Addressed in Limitation~1 and in the Task~A results; both are reproduced under Review~1.5, and the effect on the estimates is discussed under Review~2.8. Limitation~1 singles out the D30 standard deviation estimated from two replicates.}
 
-\point{\loc{Q7, item 3} The study lacks external validation using independent datasets, different cell lines, or alternative differentiation protocols. The generalizability of the proposed model therefore remains to be established.}
+\point{The study lacks external validation using independent datasets, different cell lines, or alternative differentiation protocols. The generalizability of the proposed model therefore remains to be established.}
 
 \reply{We agree and state this as Limitation~3, together with the pseudo-trajectory nature of the trajectories. Validation on independent cell lines and protocols is listed in Future directions.}
 
