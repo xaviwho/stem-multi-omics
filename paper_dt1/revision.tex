@@ -703,6 +703,33 @@ proteins TH, DDC, ALDH1A1, and COMT.
     \end{tabular}}
 \end{table}
 
+\begin{table*}[!htbp]
+  \color{red}
+  \caption{\rtag{R2.5}Canonical CTRL proteomic replicates: sample
+    label, stage assignment, number of replicates $n$ in the
+    stage, per-marker abundance
+    ($\log_{2}(1+\text{LFQ})$; n.q.\ = not quantified, LFQ $= 0$,
+    entering Eq.~\eqref{eq:Pr} as 0),
+    and the replicate-level proteomic score $Pr$
+    (Eq.~\eqref{eq:Pr}).}
+  \label{tab:replicates}
+  \centering
+  \scalebox{0.80}{
+    \begin{tabular}{llllcccccc}
+      \toprule
+      Sample label & Condition & Source day & Model stage & $n$ & TH & DDC & ALDH1A1 & COMT & $Pr$ \\
+      \midrule
+      \texttt{cont IPS prot} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+      \texttt{cont IPSC} & CTRL & iPSC & D11 & 3 & 21.97 & n.q. & n.q. & n.q. & 5.49 \\
+      \texttt{cont prot IPSC} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+      \texttt{D25 C7} & CTRL & D25 & D30 & 2 & 25.46 & 28.01 & n.q. & 22.46 & 18.98 \\
+      \texttt{D25 C8} & CTRL & D25 & D30 & 2 & 25.39 & 28.09 & n.q. & 22.38 & 18.96 \\
+      \texttt{D40 C 7} & CTRL & D40 & D52 & 2 & 26.03 & 27.92 & 22.49 & 23.19 & 24.90 \\
+      \texttt{D40 C 8} & CTRL & D40 & D52 & 2 & 27.56 & 27.88 & 22.52 & 23.09 & 25.26 \\
+      \bottomrule
+    \end{tabular}}
+\end{table*}
+
 \textbf{Sample-identity assignment:}
 The PRIDE deposit does not include the autosampler-vial to
 biological-sample mapping.
@@ -737,32 +764,6 @@ probe described in Section~\ref{sec:loro}.
   and no other marker is detected in any of them.
 \end{revblock}
 
-\begin{table*}[!htbp]
-  \color{red}
-  \caption{\rtag{R2.5}Canonical CTRL proteomic replicates: sample
-    label, stage assignment, number of replicates $n$ in the
-    stage, per-marker abundance
-    ($\log_{2}(1+\text{LFQ})$; n.q.\ = not quantified, LFQ $= 0$,
-    entering Eq.~\eqref{eq:Pr} as 0),
-    and the replicate-level proteomic score $Pr$
-    (Eq.~\eqref{eq:Pr}).}
-  \label{tab:replicates}
-  \centering
-  \scalebox{0.80}{
-    \begin{tabular}{llllcccccc}
-      \toprule
-      Sample label & Condition & Source day & Model stage & $n$ & TH & DDC & ALDH1A1 & COMT & $Pr$ \\
-      \midrule
-      \texttt{cont IPS prot} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
-      \texttt{cont IPSC} & CTRL & iPSC & D11 & 3 & 21.97 & n.q. & n.q. & n.q. & 5.49 \\
-      \texttt{cont prot IPSC} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
-      \texttt{D25 C7} & CTRL & D25 & D30 & 2 & 25.46 & 28.01 & n.q. & 22.46 & 18.98 \\
-      \texttt{D25 C8} & CTRL & D25 & D30 & 2 & 25.39 & 28.09 & n.q. & 22.38 & 18.96 \\
-      \texttt{D40 C 7} & CTRL & D40 & D52 & 2 & 26.03 & 27.92 & 22.49 & 23.19 & 24.90 \\
-      \texttt{D40 C 8} & CTRL & D40 & D52 & 2 & 27.56 & 27.88 & 22.52 & 23.09 & 25.26 \\
-      \bottomrule
-    \end{tabular}}
-\end{table*}
 
 
 As a methodological robustness check, an interim
