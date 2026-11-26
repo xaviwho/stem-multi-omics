@@ -25,7 +25,7 @@
 %% \begin{revblock}{R1.2} ... \end{revblock}   tagged red block
 %%                        (paragraphs, equations, lists)
 %% Reviewer tags hidden; to show them again use:
-%% \newcommand{\rtag}[1]{\textsuperscript{\textcolor{red}{\textbf{#1}}}}
+%% \newcommand{\rtag}[1]{\textsuperscript{\textcolor{black}{\textbf{#1}}}}
 \newcommand{\rtag}[1]{}
 \newcommand{\rev}[2]{\rtag{#1}#2}
 \newenvironment{revblock}[1]{\par\rtag{#1}\ignorespaces}{\par}
@@ -559,7 +559,7 @@ modification.
 \begin{figure*}[!htbp]
   \centering
   \includegraphics[width=0.90\linewidth]{images/fig_pr_replicates.png}
-  \caption{\rtag{R2.11}\textcolor{red}{%
+  \caption{\rtag{R2.11}\textcolor{black}{%
       \textbf{Individual proteomic CTRL replicates at each stage.}
       Columns show the four $\mathcal{G}_{Pr}$ markers and the
       replicate-level $Pr$ score on the $\log_{2}(1+\text{LFQ})$
@@ -1163,7 +1163,7 @@ averaged across state dimensions:
 %
 \begin{equation}
   \text{MAE} =
-    \frac{1}{n\textcolor{red}{k}}
+    \frac{1}{n\textcolor{black}{k}}
     \sum_{i=1}^{n}
     \bigl\lVert \mathbf{s}^{(i)}_{52} -
                 \hat{\mathbf{s}}^{(i)}_{52} \bigr\rVert_{1}
@@ -1653,17 +1653,17 @@ demonstrate.
       & $0.0627 \pm 0.0047$ & $0.0655 \pm 0.0063$ & $0.0670 \pm 0.0054$ \\
       $\Delta$ MAE
       & $-0.0279$ & $-0.0285$ & $-0.0256$ \\
-      \textcolor{red}{\rtag{R1.4}95\% CI}
-      & \textcolor{red}{$[-0.0289, -0.0269]$} & \textcolor{red}{$[-0.0306, -0.0263]$}
-      & \textcolor{red}{$[-0.0282, -0.0231]$} \\
+      \textcolor{black}{\rtag{R1.4}95\% CI}
+      & \textcolor{black}{$[-0.0289, -0.0269]$} & \textcolor{black}{$[-0.0306, -0.0263]$}
+      & \textcolor{black}{$[-0.0282, -0.0231]$} \\
       $\Delta$\%
       & $-31\%$ & $-30\%$ & $-28\%$ \\
-      \textcolor{red}{\rtag{R1.4}95\% CI}
-      & \textcolor{red}{$[-31.0, -30.6]\%$} & \textcolor{red}{$[-31.9, -28.8]\%$}
-      & \textcolor{red}{$[-29.8, -25.6]\%$} \\
-      \textcolor{red}{\rtag{R1.4}3D better}
-      & \textcolor{red}{20/20 seeds} & \textcolor{red}{20/20 seeds}
-      & \textcolor{red}{20/20 seeds} \\
+      \textcolor{black}{\rtag{R1.4}95\% CI}
+      & \textcolor{black}{$[-31.0, -30.6]\%$} & \textcolor{black}{$[-31.9, -28.8]\%$}
+      & \textcolor{black}{$[-29.8, -25.6]\%$} \\
+      \textcolor{black}{\rtag{R1.4}3D better}
+      & \textcolor{black}{20/20 seeds} & \textcolor{black}{20/20 seeds}
+      & \textcolor{black}{20/20 seeds} \\
       $d_{z}$
       & $-12.04$ & $-5.49$ & $-4.31$ \\
       $p_{\text{Holm}}$
@@ -1914,7 +1914,7 @@ in subsequent work.
         \rev{R2.24}{Throughput, gas, chain ID, bytecode size and
           confirmation}} \\
       \multicolumn{2}{l}{%
-        \textcolor{red}{depth: Supplementary Table~S1.}}
+        \textcolor{black}{depth: Supplementary Table~S1.}}
     \end{tabular}}
 \end{table}
 
