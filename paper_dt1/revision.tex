@@ -1469,6 +1469,37 @@ The mild P--D anticorrelation at D52 ($\rho = -0.26$,
 D-axis behaviour of the 2D baseline described in
 Section~\ref{sec:baseline}.
 
+\begin{figure*}[!htbp]
+  \centering
+  \includegraphics[width=0.80\linewidth]{images/fig4_benchmark.png}
+  \caption{%
+    \textbf{Benchmark performance under 2D and 3D state
+      conditions with permutation nulls.}
+    \textit{(A)} Task A macro F1 for stage separability.
+    Dashed line marks three-class chance level (0.33).
+    \textit{(B)} Task B MAE for trajectory prediction (lower
+    is better); y-axis starts at 0.05 to highlight
+    inter-condition differences.
+    Bars show mean over 20 seeds; error bars show $\pm$ std.
+    Grey = 2D baseline; green = 3D proteomics-integrated;
+    red = \texttt{perm\_across} null (Task~A);
+    amber = \texttt{perm\_within} null (Task~B).
+    Collapse of 3D performance to near-chance under
+    \texttt{perm\_across} confirms the separability lift
+    arises from real proteomic-stage signal.
+    $n = 30$ held-out test trajectories.
+    \rev{R1.7}{Condition labels follow
+      Section~\ref{sec:res_bench}: ``3D perm across'' is the
+      Task~A null and ``3D perm within'' the Task~B null. The
+      $Pr$-only and LORO conditions are not drawn because they
+      equal the 3D bars exactly (F1 $= 1.000$ in every run); their
+      values are in Table~\ref{tab:taska}. Panel~(B) shows the
+      overall MAE; its per-dimension breakdown is in
+      Table~\ref{tab:taskb_perdim}. Model labels: the linear model
+      is logistic regression in (A) and Ridge regression in (B).}}
+  \label{fig:benchmark}
+\end{figure*}
+
 Trajectory coherence, defined as the cosine similarity between
 consecutive displacement vectors
 $C^{(i)} = \cos(\mathbf{s}^{(i)}_{30} - \mathbf{s}^{(i)}_{11},\;
@@ -1570,36 +1601,7 @@ performance under 2D and 3D state conditions across 20 seeds.
     \end{tabular}}
 \end{table}
 
-\begin{figure*}[!htbp]
-  \centering
-  \includegraphics[width=0.80\linewidth]{images/fig4_benchmark.png}
-  \caption{%
-    \textbf{Benchmark performance under 2D and 3D state
-      conditions with permutation nulls.}
-    \textit{(A)} Task A macro F1 for stage separability.
-    Dashed line marks three-class chance level (0.33).
-    \textit{(B)} Task B MAE for trajectory prediction (lower
-    is better); y-axis starts at 0.05 to highlight
-    inter-condition differences.
-    Bars show mean over 20 seeds; error bars show $\pm$ std.
-    Grey = 2D baseline; green = 3D proteomics-integrated;
-    red = \texttt{perm\_across} null (Task~A);
-    amber = \texttt{perm\_within} null (Task~B).
-    Collapse of 3D performance to near-chance under
-    \texttt{perm\_across} confirms the separability lift
-    arises from real proteomic-stage signal.
-    $n = 30$ held-out test trajectories.
-    \rev{R1.7}{Condition labels follow
-      Section~\ref{sec:res_bench}: ``3D perm across'' is the
-      Task~A null and ``3D perm within'' the Task~B null. The
-      $Pr$-only and LORO conditions are not drawn because they
-      equal the 3D bars exactly (F1 $= 1.000$ in every run); their
-      values are in Table~\ref{tab:taska}. Panel~(B) shows the
-      overall MAE; its per-dimension breakdown is in
-      Table~\ref{tab:taskb_perdim}. Model labels: the linear model
-      is logistic regression in (A) and Ridge regression in (B).}}
-  \label{fig:benchmark}
-\end{figure*}
+
 
 \subsubsection{\rev{R2.23}{Stage classification (Task~A): a
     separability check}}
