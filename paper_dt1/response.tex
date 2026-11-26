@@ -70,7 +70,7 @@
 \newpage
 \editorsection
 \justifying
-Thank you for the careful and constructive assessment of manuscript CMPB-D-26-05530. We have completed a major revision in response to every point raised by Reviewers~1 and~2. Each comment is reproduced verbatim below, followed by a direct response and the corresponding revised manuscript material. To make the response self-contained, we reproduce the relevant revised passages, tables, and figures here, so that the reviewers do not need to search the manuscript to verify what changed. In the revised manuscript, all material inserted or substantively rewritten is shown in \textcolor{red}{red}, and each change is preceded by a superscript tag naming the comment it answers (e.g.\ \textcolor{red}{\textsuperscript{\textbf{R1.4}}} for Review~1.4 below; \textcolor{red}{\textsuperscript{\textbf{AC}}} marks an author correction, described at the end of this section). Table~\ref{edited} summarises the principal changes.
+Thank you for the careful and constructive assessment of manuscript CMPB-D-26-05530. We have completed a major revision in response to every point raised by Reviewers~1 and~2. Each comment is reproduced verbatim below, followed by a direct response and the corresponding revised manuscript material. To make the response self-contained, we reproduce the relevant revised passages, tables, and figures here, so that the reviewers do not need to search the manuscript to verify what changed. In the revised manuscript, all material inserted or substantively rewritten is shown in \textcolor{red}{red}, and each change is preceded by a superscript tag naming the comment it answers (e.g.\ \textcolor{red}{\textsuperscript{\textbf{R1.4}}} for Review~1.4 below; \textcolor{red}{\textsuperscript{\textbf{AC}}} marks an author correction, described at the end of this section). Language-only corrections from the full proofread are shown in red without a tag. Table~\ref{edited} summarises the principal changes.
 
  \begin{table}[!thbp]
     \caption{Summary of major differences between the submitted and revised manuscripts.}
@@ -82,7 +82,8 @@ Thank you for the careful and constructive assessment of manuscript CMPB-D-26-05
         Number of Figures                      & 4 &  5 \T\B\\\hline
         Number of Tables                       & 8 & 10 \T\B\\\hline
         Supplementary Tables                   & 0 & 1 \T\B\\\hline
-        Number of References                   & 26 & 27 \T\B\\ \hline\hline
+        Number of References                   & 26 & 26\textsuperscript{$*$} \T\B\\ \hline\hline
+    \multicolumn{3}{l}{\footnotesize\textsuperscript{$*$}One added at Reviewer~1's request; one incorrect citation removed (correction~7 below).}
     \end{tabular}
     \vspace{-4mm}
     \end{table}
@@ -107,7 +108,9 @@ The main changes are:
   \item Eq.~9 (MAE) now divides by the number of state dimensions $k$, matching the implementation, which averages the error over dimensions.
   \item The Random Forest uses 200 trees for both tasks (the text said 100 for Task~A), and the linear model for Task~A is logistic regression (the Figure~1 caption said Ridge).
   \item D11 is the floor-plate progenitor stage of the transcriptomic dataset, not a pluripotent stage.
-  \item Because $Pr$ is drawn independently of $P$ and $D$ within each stage, the near-zero within-stage correlations of Table~4 are expected by construction. We now present them as confirming that the assembled state introduces no spurious coupling, rather than as evidence of biological orthogonality.
+  \item Because $Pr$ is drawn independently of $P$ and $D$ within each stage, the near-zero within-stage correlations of Table~4 are expected by construction. We now present them as confirming that the assembled state introduces no spurious coupling, rather than as evidence of biological orthogonality, and we revised every statement that relied on them (contribution list, Sections~3.5.6, 4.2 and~4.3.1, and the Figure~4 caption).
+  \item During proofreading we found two citation problems in Section~2. A review of digital twins in tumour therapy had been cited as one of ``the deepest publicly available iPSC-DA proteomes''; it has been removed from that sentence and from the reference list. The description of Tasaki et al.\ overstated their finding (``entirely absent from transcriptomic profiles''); it now says that protein-level changes are only partly predictable from mRNA.
+  \item The one-sided Wilcoxon hypothesis in Section~3.5.3 is now written in terms of the MAE ($\text{MAE}_{3\text{D}} < \text{MAE}_{2\text{D}}$) rather than the state vectors, and the deterministic-ablation text now refers to the sampling distribution of Eq.~6.
 \end{enumerate}
 
 \newpage
@@ -310,9 +313,7 @@ For a biomedical reader the ledger can be thought of as a public, tamper-evident
 
 \point{\loc{Q9} Could the manuscript benefit from language editing? Yes.}
 
-\reply{We revised the language of all new and rewritten passages for clarity and concision, and standardised terminology across the manuscript: condition names (one definition used by every table and figure), stage names (D11 is now consistently the floor-plate progenitor stage), the distinction between ``n/d'' (absent from the proteomic table) and ``not quantified'' (LFQ $=0$), and the names of the linear models in each task. The abstract was rewritten in full.}
-% TODO(authors): if a full language pass / professional editing of the
-% unchanged text is done before resubmission, say so here.
+\reply{We proofread the complete manuscript for language. In addition to editing all new and rewritten passages for clarity and concision, we corrected grammar and usage in the unchanged text (e.g.\ subject--verb agreement, missing ``that'' clauses, a sentence fragment in Section~3.1, ``well documented'', ``advances''), replaced the ``Authors~[$n$]'' construction with the first author's name, removed unexplained jargon and internal labels (e.g.\ an unexplained personal name used for the sample mapping), defined every symbol on first use, and removed two unused abbreviations. These language-only corrections are shown in red without a superscript tag, so that the tags continue to point only to substantive changes. We also standardised terminology across the manuscript: condition names (one definition used by every table and figure), stage names (D11 is consistently the floor-plate progenitor stage), the distinction between ``n/d'' (absent from the proteomic table) and ``not quantified'' (LFQ $=0$), and the names of the linear models in each task. The abstract was rewritten in full.}
 
 \point{\loc{final comment 6} The literature review may be strengthened by briefly citing recent digital twin work on state-space-based modelling and real-time predictive monitoring, as the present study also focuses on improving digital-twin state representation: R. Pandey and N. Kumar, ``State-Space Based Digital Twin of Single-Stage PV Inverter With Predictive Control for Real-Time Stability Monitoring,'' IEEE Transactions on Industrial Electronics, vol.~73, no.~9, pp.~13156--13165, Sept.~2026, doi:~10.1109/TIE.2026.3675206.}
 
@@ -571,7 +572,7 @@ Confirmation depth & 72,011 blocks since registration \\
 
 \point{\loc{Q9} Could the manuscript benefit from language editing? Yes.}
 
-\reply{Please see our reply to Review~1.15: all new and rewritten passages were edited for clarity and concision, terminology was standardised across the manuscript, and the abstract was rewritten in full.}
+\reply{Please see our reply to Review~1.15: the complete manuscript was proofread, all new and rewritten passages were edited for clarity and concision, terminology was standardised, and the abstract was rewritten in full. Language-only corrections are shown in red without a superscript tag.}
 
 \section*{Closing Statement}
 We again thank the Associate Editor and both reviewers for comments that materially improved the paper. The revision now states a single primary objective and keeps stage separability and trajectory prediction apart; documents the proteomic processing, the cross-study stage correspondence, and every replicate used; describes trajectory and $Pr$ construction exactly as implemented, including the corrections listed above; reports confidence intervals and the dimension-specific source of the Task~B gain; and states the limitations of a 3/2/2-replicate, cross-study design without overstating what the perfect separability or the MAE reduction show.

@@ -67,11 +67,16 @@ truthfully in the text; no results changed.
 - Random Forest uses 200 trees for both tasks (text said 100 for Task A).
 - Task A's linear model is logistic regression (Fig. 1 caption said Ridge).
 - D11 is the floor-plate progenitor stage, not "pluripotent".
-- Within-stage orthogonality of Pr is expected by construction (Pr is drawn independently of P, D); the abstract and §4.2 claims were toned down accordingly.
+- Within-stage orthogonality of Pr is expected by construction (Pr is drawn independently of P, D); the claims in the abstract, contribution list, §3.5.6, §4.2, §4.3.1 and the Fig. 4 caption were toned down accordingly.
 - Limitation "4 of 6 markers" corrected to 4 of the 9 candidates in Table 1; "Paper 2" wording removed.
+- Citation fixes (§2): `shen2025virtual` (tumour-therapy DT review) was mis-cited as an iPSC-DA proteome and is removed (references 27 → 26); the Tasaki et al. claim ("entirely absent") is toned down to "only partly predictable from mRNA".
+- Wilcoxon hypothesis written as MAE_3D < MAE_2D (was s_3D < s_2D); deterministic ablation now refers to Eq. 6.
 
-## Language editing note (R1.15, R2.25)
+## Language editing (R1.15, R2.25)
 
-New and rewritten text was edited for clarity. Unchanged original text has not
-had a full language pass; a professional editing service is advisable before
-resubmission.
+The whole manuscript was proofread. Language-only corrections in otherwise
+unchanged text use `\lang{}`: red, but with no superscript tag, so the tags
+still point only to substantive changes. Examples: "Authors~[n]" replaced by
+first-author names, subject–verb agreement, missing "that", a sentence
+fragment in §3.1, unexplained "Dittmar" removed, `Ph` defined, unused
+abbreviations (EGA, MBR) dropped.
