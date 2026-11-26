@@ -445,7 +445,7 @@ D52 & D52 (60,754) & mature DA neuron       & D40 (2)  & mature DA neuron \\
 \end{tabular}
 \end{table}
 
-\point{\loc{Q4, item 2} A distribution plot showing individual proteomic biological replicates at each stage should be added to illustrate variability between replicates, rather than reporting only means and standard deviations.}
+\point{A distribution plot showing individual proteomic biological replicates at each stage should be added to illustrate variability between replicates, rather than reporting only means and standard deviations.}
 
 \reply{Added as Figure~2. It shows each replicate for every marker and for $Pr$, distinguishes quantified values from non-detections, and overlays the distribution from which trajectory $Pr$ values are drawn. It makes the replicate structure explicit: the D25 and D40 replicates agree closely, whereas the three iPSC replicates do not.}
 
@@ -459,11 +459,11 @@ D52 & D52 (60,754) & mature DA neuron       & D40 (2)  & mature DA neuron \\
 The figure shows that replicate agreement differs sharply by stage: the two D25 replicates (D30 stage) and the two D40 replicates (D52 stage) agree closely, whereas the three iPSC replicates do not --- TH is quantified in only one of them, and no other marker is detected in any of them.
 \end{revised}
 
-\point{\loc{Q5, item 1} The Pr-only model achieves the same stage classification performance as the full 3D model, indicating that stage discrimination is mainly driven by the Pr axis. This finding should be clearly acknowledged in the discussion.}
+\point{The Pr-only model achieves the same stage classification performance as the full 3D model, indicating that stage discrimination is mainly driven by the Pr axis. This finding should be clearly acknowledged in the discussion.}
 
 \reply{We agree and now acknowledge it explicitly in the abstract, in the Task~A results (``We state this explicitly: stage discrimination in the 3D model is driven by the $Pr$ axis''), in the validation summary of the Discussion (Section~5.2), and as Limitation~4. The revised passages are reproduced under Reviews~1.8 and~1.10.}
 
-\point{\loc{Q5, item 2} The reduction in overall MAE does not necessarily indicate improved prediction performance in the original transcriptomic dimensions. The authors should interpret this result more carefully in light of the dimension-specific errors.}
+\point{The reduction in overall MAE does not necessarily indicate improved prediction performance in the original transcriptomic dimensions. The authors should interpret this result more carefully in light of the dimension-specific errors.}
 
 \reply{We agree. We added paired bootstrap confidence intervals for the change in the $P$/$D$-only error; all three include zero, so adding $Pr$ neither improves nor degrades the transcriptomic forecasts. The text now explains why the overall MAE falls anyway (the metric averages over dimensions, and the added dimension is forecast with very low error because it is drawn around a fixed stage centre) and warns against reading the lower overall MAE as better transcriptomic prediction. The abstract, the Table~7 caption, and the conclusion state the same.}
 
