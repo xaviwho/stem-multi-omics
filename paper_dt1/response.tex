@@ -161,7 +161,7 @@ with $(\mu_{t}, \sigma_{t})$ the replicate statistics above. D11 is anchored at 
 In particular, LORO is not an external validation: all seven replicates come from one laboratory, one cell line and one differentiation protocol, and a held-out replicate is still classified against trajectories generated from the same study. It shows that the result does not hinge on any single replicate; it cannot show that the result transfers to independent datasets.
 \end{revised}
 
-\point{\loc{Q3, item 2} The authors may slightly improve the reporting by adding confidence intervals for the main MAE reduction values and by clarifying whether the 20 seeds affect only model initialization/sampling or also the train-validation-test split.}
+\point{The authors may slightly improve the reporting by adding confidence intervals for the main MAE reduction values and by clarifying whether the 20 seeds affect only model initialization/sampling or also the train-validation-test split.}
 
 \reply{We computed paired percentile-bootstrap 95\% confidence intervals over the 20 seeds (10,000 resamples) for both the absolute and the relative MAE reduction. They are added to Table~7, the Task~B text, and the abstract. All intervals exclude zero, and 3D had the lower MAE in all 20 seeds for every model. On the seeds: each seed changes the train/validation/test split, the per-trajectory $Pr$ draws, the permutation shuffles, and every model's initialisation; it does \emph{not} change the 200 $(P, D)$ trajectories or the proteomic stage statistics, which are fixed. This is now stated in Sections~3.3 and~3.5.3.}
 
@@ -190,7 +190,7 @@ The 3D state reduces overall MAE by 28--31\% across all model families (Ridge $-
 [\ldots] across 20 seeds (42--61). [\ldots] The seed does \textit{not} change the 200 $(P, D)$ trajectories, which are fixed (Section~3.3), or the proteomic stage statistics. [\ldots] Trajectories were split into train/validation/test sets of 140/30/30; the split is redrawn for each of the 20 seeds (Section~3.5.3), and the reference seed 42 is the seed used by the 2D baseline described in Section~3.1.
 \end{revised}
 
-\point{\loc{Q3, item 3; Q7, item 2; final comment 2} Additional statistical review is not necessary, but the small proteomics replicate count should be clearly acknowledged when interpreting the stage-separability results. / The small CTRL proteomics replicate count should be emphasized because it affects the strength of biological generalization. / The small CTRL proteomics replicate count should be mentioned more carefully when interpreting biological generalization.}
+\point{ Additional statistical review is not necessary, but the small proteomics replicate count should be clearly acknowledged when interpreting the stage-separability results. / The small CTRL proteomics replicate count should be emphasized because it affects the strength of biological generalization. / The small CTRL proteomics replicate count should be mentioned more carefully when interpreting biological generalization.}
 
 \reply{We now acknowledge the replicate count at each point where results are interpreted: in the abstract, directly in the Task~A results (where we explain that the D30 standard deviation estimated from two replicates almost certainly understates true variability and that F1 would be expected to fall below 1.000 with more replicates), as the first of the numbered limitations, and in the conclusion.}
 
