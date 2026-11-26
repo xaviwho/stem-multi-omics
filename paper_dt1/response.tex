@@ -412,7 +412,7 @@ The complete source code, configuration files, and scripts that regenerate every
 
 \reply{We discuss this as the first limitation and in the Task~A results (both reproduced under Review~1.5). In short: the stage means are estimated from few replicates and the D11 mean rests on a single detection; the standard deviations are the weaker estimate, and the D30 value of 0.01 from two replicates almost certainly understates true variability. Because every trajectory's $Pr$ is drawn from these estimates, the perfect separability and the low $Pr$ forecasting error depend on them. The LORO probe and the 20 seeds establish stability with respect to removing any one replicate and to the pipeline's random choices, but cannot correct biased variance estimates; a powered time course is required. The new per-replicate figure (Review~2.11) makes the spread of each stage visible.}
 
-\point{\loc{Q3, item 2} The authors should further clarify the statistical independence of the experiments conducted using 20 random seeds and justify the use of the paired Wilcoxon signed-rank test.}
+\point{The authors should further clarify the statistical independence of the experiments conducted using 20 random seeds and justify the use of the paired Wilcoxon signed-rank test.}
 
 \reply{We added a paragraph that addresses both points. Runs with different seeds use independent random streams but are not fully independent observations, since they share the trajectories, the proteomic statistics, and overlapping training sets; the $p$-values are therefore interpreted as robustness to the pipeline's random choices, not as inference about new samples. Pairing is justified because the 2D and 3D models of a seed share the same split and trajectories; the Wilcoxon test is used because normality of 20 differences cannot be checked reliably. We complement the tests with bootstrap confidence intervals (Review~1.4).}
 
@@ -421,7 +421,7 @@ The complete source code, configuration files, and scripts that regenerate every
 Within a seed, the 2D and 3D models share the same split and the same trajectories, so the two MAEs form a natural pair and the per-seed difference removes split-to-split variation; this is why a paired test is used. Across seeds the draws are made with independent random streams, but the runs are not fully independent observations: they reuse the same 200 $(P, D)$ trajectories, the same proteomic statistics, and overlapping training sets. The Wilcoxon signed-rank test was chosen because it does not assume the 20 paired differences are normally distributed, which cannot be checked reliably at $n = 20$. Its $p$-values should therefore be read as evidence that the 2D$\to$3D difference is robust to the random choices of the pipeline (split, $Pr$ draw, initialisation), not as inference about new biological samples or new datasets. To report the size of the effect with its uncertainty, a 95\% confidence interval for the mean paired MAE difference and for the relative change is also computed by percentile bootstrap over seeds (10,000 resamples, seeds resampled in pairs).
 \end{revised}
 
-\point{\loc{Q4, item 1} A table summarizing the mapping between the transcriptomic and proteomic stages, including data sources and the number of biological replicates, would be helpful.}
+\point{A table summarizing the mapping between the transcriptomic and proteomic stages, including data sources and the number of biological replicates, would be helpful.}
 
 \reply{Added as Table~2.}
 
