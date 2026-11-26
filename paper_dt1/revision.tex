@@ -1363,6 +1363,20 @@ proxy adds value beyond the measured 3D state.
 %% ============================================================
 %%  RESULTS
 %% ============================================================
+\begin{figure*}[!htbp]
+  \centering
+  \includegraphics[width=0.70\linewidth]{images/fig3_correlations.png}
+  \caption{%
+    \textbf{Per-stage Spearman correlation matrices among
+      $(P, D, Pr)$.}
+    Each cell reports the Spearman $\rho$ estimate with 95\%
+    bootstrap confidence interval ($n = 1{,}000$ resamples).
+    All $Pr$ correlations at every stage have confidence
+    intervals straddling zero ($|\rho| \leq 0.08$)\rev{AC}{, as
+      expected because $Pr$ is drawn independently of $P$ and $D$
+      within each stage (Eq.~\eqref{eq:prsample})}.}
+  \label{fig:corr}
+\end{figure*}
 \section{Results}
 \label{sec:results}
 
@@ -1401,20 +1415,6 @@ separated from one another.
     coherence}}
 \label{sec:res_orthog}
 
-\begin{figure*}[!htbp]
-  \centering
-  \includegraphics[width=0.70\linewidth]{images/fig3_correlations.png}
-  \caption{%
-    \textbf{Per-stage Spearman correlation matrices among
-      $(P, D, Pr)$.}
-    Each cell reports the Spearman $\rho$ estimate with 95\%
-    bootstrap confidence interval ($n = 1{,}000$ resamples).
-    All $Pr$ correlations at every stage have confidence
-    intervals straddling zero ($|\rho| \leq 0.08$)\rev{AC}{, as
-      expected because $Pr$ is drawn independently of $P$ and $D$
-      within each stage (Eq.~\eqref{eq:prsample})}.}
-  \label{fig:corr}
-\end{figure*}
 
 \begin{table}[!htbp]
   \caption{%
