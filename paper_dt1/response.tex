@@ -101,7 +101,7 @@ The main changes are:
 \end{itemize}
 
 \medskip
-\noindent\textbf{Author corrections (tag AC).} While answering the comments on reproducibility, we re-checked every methodological statement against the released code and corrected the following descriptions. None of these corrections changes any reported number; they make the text match what was actually run.
+\noindent\textbf{Author corrections.} While answering the comments on reproducibility, we re-checked every methodological statement against the released code and corrected the following descriptions. None of these corrections changes any reported number; they make the text match what was actually run.
 \begin{enumerate}
   \item The D11 proteomic score of each trajectory is drawn from a detection-floor distribution $\mathcal{N}(0, \sigma_{\text{D11}}/2)$, not from $\mathcal{N}(1.83, 3.17)$ as originally written. Two of the three iPSC replicates contain no marker, and the stage mean of 1.83 is produced by a single TH detection (Table~3, Figure~2). The rationale is given in Section~3.3 (Eq.~6).
   \item $P$ and $D$ are scaled with fixed bounds computed over all 161,584 cells, as in the published baseline; only $Pr$ uses training-split bounds. The original text stated that all three scores used training-split bounds. Section~3.3 now explains why the fixed, label-free bounds cannot leak label information.
