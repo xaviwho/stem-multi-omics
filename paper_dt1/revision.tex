@@ -1239,6 +1239,32 @@ correction is applied across the three model families.
   over seeds (10,000 resamples, seeds resampled in pairs).
 \end{revblock}
 
+\begin{figure*}[!htbp]
+  \centering
+  \includegraphics[width=0.75\linewidth]{images/fig2_2d_vs_3d.png}
+  \caption{%
+    \textbf{2D versus 3D state space representation across
+      differentiation stages D11, D30, and D52.}
+    \textit{Left:} transcriptomic-only 2D state $(P, D)$
+    showing substantial overlap between D11 and D30 in both
+    the scatter and marginal density plots.
+    \textit{Right:} proteomics-integrated 3D state $(P, D, Pr)$
+    where bubble size encodes $Pr$; grey lines connect sampled
+    trajectories across timepoints.
+    Stage centroids are shown as labelled diamonds.
+    Addition of the proteomic axis resolves the stage ambiguity
+    present in the 2D projection.
+    $n = 200$ sampled trajectories; colours indicate stage
+    identity (D11 blue, D30 orange, D52 green).
+    \rev{R1.7}{This figure shows the state representations
+      only; model performance under the 2D, 3D, $Pr$-only and
+      permutation-null conditions is reported in
+      Figure~\ref{fig:benchmark} and Table~\ref{tab:taska}. The
+      right panel uses the D11 detection-floor anchor of
+      Eq.~\eqref{eq:prsample}.}}
+  \label{fig:scatter}
+\end{figure*}
+
 \subsubsection{Permutation nulls}
 
 Two permutation nulls were computed to distinguish real
@@ -1305,32 +1331,6 @@ monotonic proteomic axis; the multi-omics value of the 3D
 state then rests on \rev{AC}{Task~B and on the stage information
   that $Pr$ adds}, not on Task~A capacity. This decomposition is
 reported explicitly rather than left implicit.
-
-\begin{figure*}[!htbp]
-  \centering
-  \includegraphics[width=0.75\linewidth]{images/fig2_2d_vs_3d.png}
-  \caption{%
-    \textbf{2D versus 3D state space representation across
-      differentiation stages D11, D30, and D52.}
-    \textit{Left:} transcriptomic-only 2D state $(P, D)$
-    showing substantial overlap between D11 and D30 in both
-    the scatter and marginal density plots.
-    \textit{Right:} proteomics-integrated 3D state $(P, D, Pr)$
-    where bubble size encodes $Pr$; grey lines connect sampled
-    trajectories across timepoints.
-    Stage centroids are shown as labelled diamonds.
-    Addition of the proteomic axis resolves the stage ambiguity
-    present in the 2D projection.
-    $n = 200$ sampled trajectories; colours indicate stage
-    identity (D11 blue, D30 orange, D52 green).
-    \rev{R1.7}{This figure shows the state representations
-      only; model performance under the 2D, 3D, $Pr$-only and
-      permutation-null conditions is reported in
-      Figure~\ref{fig:benchmark} and Table~\ref{tab:taska}. The
-      right panel uses the D11 detection-floor anchor of
-      Eq.~\eqref{eq:prsample}.}}
-  \label{fig:scatter}
-\end{figure*}
 
 \subsubsection{Sensitivity ablations}
 \label{sec:ablations}
