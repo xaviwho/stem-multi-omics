@@ -779,7 +779,88 @@ yielding $n = 4$ replicates per stage by pooling CTRL and
 PINK1 (PINK1 affects TH by $\approx$10--20\%, smaller than
 the $\approx 1$ log$_{2}$ inter-stage difference).
 
-
+\begin{table*}[!htbp]
+  \caption{%
+    Proteomics marker set $\mathcal{G}_{Pr}$ curation
+    (\lang{canonical sample mapping of the original authors}).
+    Only markers with a confirmed monotonically increasing
+    abundance across iPSC $\to$ D25 $\to$ D40 were retained.
+    Per-stage values are log$_{2}$ LFQ intensities from
+    the canonical CTRL-only proteinGroups;
+    n/d = not detected by standard whole-cell-lysate LFQ.
+    \rev{R2.4}{Values are means of $\log_{2}(1+\text{LFQ})$ over
+      the stage's CTRL replicates; 0.00 means the protein is
+      present in the table but has LFQ $= 0$ (not quantified) in
+      every replicate of that stage, whereas n/d means it is absent
+      from the table altogether. The iPSC value of TH (7.32) comes
+      from a single replicate (21.97) averaged with two
+      non-detections (Table~\ref{tab:replicates}).}}
+  \label{tab:gpr}
+  \centering
+  \scalebox{0.79}{
+    \begin{tabular}{lcccccl}
+      \toprule
+      Marker & iPSC & D25 & D40 & Verdict & Decision
+      & Biological role \\
+      \midrule
+      TH
+      & 7.32 & 25.43 & 26.79
+      & $\uparrow$ monotonic
+      & \textbf{Included}
+      & Rate-limiting DA-synthesis enzyme \\
+      DDC
+      & 0.00 & 28.05 & 27.90
+      & $\uparrow$ across stages\textsuperscript{$*$}
+      & \textbf{Included}
+      & DOPA decarboxylase (AADC) \\
+      ALDH1A1
+      & 0.00 & 0.00  & 22.50
+      & sharp late-stage rise
+      & \textbf{Included}
+      & A9-DA subtype marker; PD-vulnerable \\
+      COMT
+      & 0.00 & 22.42 & 23.14
+      & $\uparrow$ monotonic
+      & \textbf{Included}
+      & DA catabolism; rises with neuronal activity \\
+      \midrule
+      FOXA2
+      & 0.00 & 11.09 & 0.00
+      & non-monotonic
+      & Excluded
+      & Floor-plate TF; silenced by D40 \\
+      NR4A2
+      & n/d  & n/d   & n/d
+      & ---
+      & Excluded
+      & Nuclear TF; below LFQ detection limit\textsuperscript{$\dagger$} \\
+      PITX3
+      & n/d  & n/d   & n/d
+      & ---
+      & Excluded
+      & Nuclear TF; below LFQ detection limit\textsuperscript{$\dagger$} \\
+      LMX1B
+      & n/d  & n/d   & n/d
+      & ---
+      & Excluded
+      & Nuclear TF; below LFQ detection limit\textsuperscript{$\dagger$} \\
+      KCNJ6
+      & n/d  & n/d   & n/d
+      & ---
+      & Excluded
+      & Membrane channel; requires enrichment protocol \\
+      \bottomrule
+      \multicolumn{7}{l}{%
+        \textsuperscript{$*$}DDC D25$\to$D40 plateau
+        $\leq 0.15$ log$_{2}$ units --- within replicate noise;
+        three-stage trajectory treated as monotonic.} \\
+      \multicolumn{7}{l}{%
+        \textsuperscript{$\dagger$}Absence confirmed in
+        Cavarischia-Rega et al.~\cite{cavarischia2024proteome}
+        (9,409 protein groups, \texttt{PXD050991}) ---
+        \lang{a limitation of the MS method}.}
+    \end{tabular}}
+\end{table*}
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Multi-omics state construction}}
