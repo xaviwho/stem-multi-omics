@@ -16,6 +16,7 @@ htmlcov/
 
 # Pipeline artifacts (large; regenerated)
 artifacts/
+data/
 data/raw/
 data/cache/
 *.h5ad
