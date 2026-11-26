@@ -132,7 +132,7 @@ The primary objective of this study is the construction and validation of a prot
 This study constructs and validates a proteomics-integrated state representation for dopaminergic differentiation of induced pluripotent stem cells (iPSC-DA).
 \end{revised}
 
-\point{\loc{Q2, item 2} The authors should slightly improve reproducibility by providing clearer details on how the 200 trajectories were sampled from the scRNA-seq dataset and how Pr values were assigned to individual trajectories.}
+\point{The authors should slightly improve reproducibility by providing clearer details on how the 200 trajectories were sampled from the scRNA-seq dataset and how Pr values were assigned to individual trajectories.}
 
 \reply{We now describe both steps exactly as implemented. Each trajectory pairs one cell drawn uniformly at random from each of the D11, D30, and D52 cell pools, independently of one another; because scRNA-seq is destructive, the three cells are different cells and a trajectory is a population-level pseudo-trajectory. The 200 trajectories are the published tensor of the baseline study and are identical in every run. $Pr$ is then assigned to each trajectory and stage by one random draw from the stage distribution estimated from the proteomic replicates (new Eq.~6). D11 is anchored at the detection floor, and we explain why. Both procedures are in Section~3.3, and the replicate data and sampling distributions are shown together in the new Figure~2 (reproduced under Review~2.11).}
 
