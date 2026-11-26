@@ -703,82 +703,6 @@ proteins TH, DDC, ALDH1A1, and COMT.
     \end{tabular}}
 \end{table}
 
-\textbf{Sample-identity assignment:}
-The PRIDE deposit does not include the autosampler-vial to
-biological-sample mapping.
-The canonical sample identities, \lang{obtained from the original} authors~\cite{novak2022single}, are used as the primary mapping in this work.
-The canonical CTRL-only replicates and their stage
-assignments are: three iPSC samples (\texttt{cont IPS prot},
-\texttt{cont IPSC}, \texttt{cont prot IPSC}) for the D11
-reference stage; two D25 samples (\texttt{D25 C7},
-\texttt{D25 C8}) for the D30 reference stage; and two D40
-samples (\texttt{D40 C 7}, \texttt{D40 C 8}) for the D52
-reference stage, yielding $n = 3/2/2$ CTRL biological
-replicates per stage.
-The robustness of stage assignment to this small replicate
-count is established directly by the leave-one-replicate-out
-probe described in Section~\ref{sec:loro}.
-
-\begin{revblock}{R2.5,R2.11}
-  Table~\ref{tab:replicates} lists every replicate used, from
-  its label in the canonical table to its model stage, together
-  with the per-marker abundances and the resulting $Pr$ value,
-  and Figure~\ref{fig:replicates} plots the individual
-  replicates.
-  The canonical sample labels are the column names of the
-  authors' \texttt{proteinGroups} table; the deposited raw files
-  (\texttt{Skupin11--18}) cannot be linked to these labels,
-  because the PRIDE deposit does not record the vial-to-sample
-  mapping and contains no iPSC samples.
-  The figure shows that replicate agreement differs sharply by
-  stage: the two D25 replicates (D30 stage) and the two D40
-  replicates (D52 stage) agree closely, whereas the three iPSC
-  replicates do not --- TH is quantified in only one of them,
-  and no other marker is detected in any of them.
-\end{revblock}
-
-\begin{table*}[!htbp]
-  \color{red}
-  \caption{\rtag{R2.5}Canonical CTRL proteomic replicates: sample
-    label, stage assignment, number of replicates $n$ in the
-    stage, per-marker abundance
-    ($\log_{2}(1+\text{LFQ})$; n.q.\ = not quantified, LFQ $= 0$,
-    entering Eq.~\eqref{eq:Pr} as 0),
-    and the replicate-level proteomic score $Pr$
-    (Eq.~\eqref{eq:Pr}).}
-  \label{tab:replicates}
-  \centering
-  \scalebox{0.80}{
-    \begin{tabular}{llllcccccc}
-      \toprule
-      Sample label & Condition & Source day & Model stage & $n$ & TH & DDC & ALDH1A1 & COMT & $Pr$ \\
-      \midrule
-      \texttt{cont IPS prot} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
-      \texttt{cont IPSC} & CTRL & iPSC & D11 & 3 & 21.97 & n.q. & n.q. & n.q. & 5.49 \\
-      \texttt{cont prot IPSC} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
-      \texttt{D25 C7} & CTRL & D25 & D30 & 2 & 25.46 & 28.01 & n.q. & 22.46 & 18.98 \\
-      \texttt{D25 C8} & CTRL & D25 & D30 & 2 & 25.39 & 28.09 & n.q. & 22.38 & 18.96 \\
-      \texttt{D40 C 7} & CTRL & D40 & D52 & 2 & 26.03 & 27.92 & 22.49 & 23.19 & 24.90 \\
-      \texttt{D40 C 8} & CTRL & D40 & D52 & 2 & 27.56 & 27.88 & 22.52 & 23.09 & 25.26 \\
-      \bottomrule
-    \end{tabular}}
-\end{table*}
-
-
-As a methodological robustness check, an interim
-TH-abundance stratification was applied prior to receipt
-of the canonical mapping.
-All eight files exhibited TH log$_{2}$ LFQ intensities in
-the range $[23.94,\,25.71]$, confirming \lang{that} all samples are
-post-differentiation DA neurons ($\text{TH} \approx 0$
-in undifferentiated iPSCs).
-Splitting at the median TH abundance assigned the four
-lower-TH files (Skupin11--14) to the D30 reference stage
-and the four higher-TH files (Skupin15--18) to D52,
-yielding $n = 4$ replicates per stage by pooling CTRL and
-PINK1 (PINK1 affects TH by $\approx$10--20\%, smaller than
-the $\approx 1$ log$_{2}$ inter-stage difference).
-
 \begin{table*}[!htbp]
   \caption{%
     Proteomics marker set $\mathcal{G}_{Pr}$ curation
@@ -861,6 +785,83 @@ the $\approx 1$ log$_{2}$ inter-stage difference).
         \lang{a limitation of the MS method}.}
     \end{tabular}}
 \end{table*}
+
+\textbf{Sample-identity assignment:}
+The PRIDE deposit does not include the autosampler-vial to
+biological-sample mapping.
+The canonical sample identities, \lang{obtained from the original} authors~\cite{novak2022single}, are used as the primary mapping in this work.
+The canonical CTRL-only replicates and their stage
+assignments are: three iPSC samples (\texttt{cont IPS prot},
+\texttt{cont IPSC}, \texttt{cont prot IPSC}) for the D11
+reference stage; two D25 samples (\texttt{D25 C7},
+\texttt{D25 C8}) for the D30 reference stage; and two D40
+samples (\texttt{D40 C 7}, \texttt{D40 C 8}) for the D52
+reference stage, yielding $n = 3/2/2$ CTRL biological
+replicates per stage.
+The robustness of stage assignment to this small replicate
+count is established directly by the leave-one-replicate-out
+probe described in Section~\ref{sec:loro}.
+
+\begin{revblock}{R2.5,R2.11}
+  Table~\ref{tab:replicates} lists every replicate used, from
+  its label in the canonical table to its model stage, together
+  with the per-marker abundances and the resulting $Pr$ value,
+  and Figure~\ref{fig:replicates} plots the individual
+  replicates.
+  The canonical sample labels are the column names of the
+  authors' \texttt{proteinGroups} table; the deposited raw files
+  (\texttt{Skupin11--18}) cannot be linked to these labels,
+  because the PRIDE deposit does not record the vial-to-sample
+  mapping and contains no iPSC samples.
+  The figure shows that replicate agreement differs sharply by
+  stage: the two D25 replicates (D30 stage) and the two D40
+  replicates (D52 stage) agree closely, whereas the three iPSC
+  replicates do not --- TH is quantified in only one of them,
+  and no other marker is detected in any of them.
+\end{revblock}
+
+\begin{table*}[!htbp]
+  \color{red}
+  \caption{\rtag{R2.5}Canonical CTRL proteomic replicates: sample
+    label, stage assignment, number of replicates $n$ in the
+    stage, per-marker abundance
+    ($\log_{2}(1+\text{LFQ})$; n.q.\ = not quantified, LFQ $= 0$,
+    entering Eq.~\eqref{eq:Pr} as 0),
+    and the replicate-level proteomic score $Pr$
+    (Eq.~\eqref{eq:Pr}).}
+  \label{tab:replicates}
+  \centering
+  \scalebox{0.80}{
+    \begin{tabular}{llllcccccc}
+      \toprule
+      Sample label & Condition & Source day & Model stage & $n$ & TH & DDC & ALDH1A1 & COMT & $Pr$ \\
+      \midrule
+      \texttt{cont IPS prot} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+      \texttt{cont IPSC} & CTRL & iPSC & D11 & 3 & 21.97 & n.q. & n.q. & n.q. & 5.49 \\
+      \texttt{cont prot IPSC} & CTRL & iPSC & D11 & 3 & n.q. & n.q. & n.q. & n.q. & 0.00 \\
+      \texttt{D25 C7} & CTRL & D25 & D30 & 2 & 25.46 & 28.01 & n.q. & 22.46 & 18.98 \\
+      \texttt{D25 C8} & CTRL & D25 & D30 & 2 & 25.39 & 28.09 & n.q. & 22.38 & 18.96 \\
+      \texttt{D40 C 7} & CTRL & D40 & D52 & 2 & 26.03 & 27.92 & 22.49 & 23.19 & 24.90 \\
+      \texttt{D40 C 8} & CTRL & D40 & D52 & 2 & 27.56 & 27.88 & 22.52 & 23.09 & 25.26 \\
+      \bottomrule
+    \end{tabular}}
+\end{table*}
+
+
+As a methodological robustness check, an interim
+TH-abundance stratification was applied prior to receipt
+of the canonical mapping.
+All eight files exhibited TH log$_{2}$ LFQ intensities in
+the range $[23.94,\,25.71]$, confirming \lang{that} all samples are
+post-differentiation DA neurons ($\text{TH} \approx 0$
+in undifferentiated iPSCs).
+Splitting at the median TH abundance assigned the four
+lower-TH files (Skupin11--14) to the D30 reference stage
+and the four higher-TH files (Skupin15--18) to D52,
+yielding $n = 4$ replicates per stage by pooling CTRL and
+PINK1 (PINK1 affects TH by $\approx$10--20\%, smaller than
+the $\approx 1$ log$_{2}$ inter-stage difference).
+
 
 % -----------------------------------------------------------------
 \subsection{\textbf{Multi-omics state construction}}
