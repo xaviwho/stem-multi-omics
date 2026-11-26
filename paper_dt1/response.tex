@@ -481,11 +481,11 @@ The paired 95\% bootstrap intervals for the change in $\text{MAE}_{PD}$ between 
 The central finding is that adding a measured proteomic axis resolves stage ambiguity that the transcriptomic state cannot: the D30 peak of the $D$ score makes D30 and D52 hard to tell apart from transcripts, whereas the DA-pathway proteins keep rising from D25 to D40 (Table~1). The complementarity is biological as well as statistical. The $D$ score records whether DA-lineage \textit{genes} are transcribed, including transcription factors whose expression is transient; $Pr$ records whether the cells have accumulated the \textit{enzymes} that make and degrade dopamine --- TH and DDC for synthesis, COMT for catabolism --- and, through ALDH1A1, whether they have acquired the A9 substantia nigra phenotype lost in Parkinson's disease. Protein abundance can keep rising after transcript levels plateau or fall, so $Pr$ can reflect functional maturation that transcript-based scores do not, consistent with the weak mRNA--protein correlation reported in DA contexts. These are also the proteins through which many dopaminergic drugs act (e.g.\ DDC and COMT inhibitors used in Parkinson's therapy), which is why a protein-level axis is needed for the drug-screening use the framework is ultimately aimed at.
 \end{revised}
 
-\point{\loc{Q6, item 2} The Pr-only baseline, permutation tests, and LORO analysis are valuable validation experiments. Their contributions should be summarized more clearly in the discussion.}
+\point{The Pr-only baseline, permutation tests, and LORO analysis are valuable validation experiments. Their contributions should be summarized more clearly in the discussion.}
 
 \reply{We added Section~5.2, ``What the validation experiments establish'', which summarises each experiment as the question it answers and its result. The full text is reproduced under Review~1.10.}
 
-\point{\loc{Q6, item 3} The practical role of blockchain-based provenance in managing multi-source omics data and verifying data integrity should be explained more explicitly.}
+\point{The practical role of blockchain-based provenance in managing multi-source omics data and verifying data integrity should be explained more explicitly.}
 
 \reply{We explain the practical role in two places: a plain-language description of the verification procedure in Section~3.4 (reproduced under Review~1.11), and a shortened Discussion paragraph that gives the concrete reasons it mattered in this multi-source pipeline.}
 
@@ -494,7 +494,7 @@ The central finding is that adding a measured proteomic axis resolves stage ambi
 Most biomedical provenance systems record where data came from but not how they were processed; the layer here records both, the fingerprint of every input file and the code version of every run. Its practical value in this study is concrete: the proteomic input exists in two versions (a local re-processing and the authors' canonical table), the stage mapping changed during the project, and the transcriptomic and proteomic data come from different laboratories. Without a fixed record, a reader could not tell which of these versions produced a published number; with it, any reader can check in milliseconds and at no cost that their files are the ones used. Integrity holds under the permissioned chain's proof-of-authority trust model, so the contribution is verifiable provenance infrastructure, not a security guarantee against an adversarial public network, and it is secondary to the modelling results.
 \end{revised}
 
-\point{\loc{Q7, item 1} The transcriptomic and proteomic datasets were obtained from different studies, potentially introducing differences in experimental conditions and batch effects. This should be discussed further.}
+\point{The transcriptomic and proteomic datasets were obtained from different studies, potentially introducing differences in experimental conditions and batch effects. This should be discussed further.}
 
 \reply{This is now Limitation~2. It names the sources of cross-study difference, explains their possible effect, notes that the model cannot learn a cell-level relation between the modalities because $Pr$ is drawn independently of $P$ and $D$, and identifies paired measurements from the same cultures as the remedy (also added to Future directions).}
 
