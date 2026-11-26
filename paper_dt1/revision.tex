@@ -556,6 +556,26 @@ The marker gene sets $\mathcal{G}_{P}$ and $\mathcal{G}_{D}$
 defined in Section~\ref{sec:baseline} were used without
 modification.
 
+\begin{figure*}[!htbp]
+  \centering
+  \includegraphics[width=0.90\linewidth]{images/fig_pr_replicates.png}
+  \caption{\rtag{R2.11}\textcolor{red}{%
+      \textbf{Individual proteomic CTRL replicates at each stage.}
+      Columns show the four $\mathcal{G}_{Pr}$ markers and the
+      replicate-level $Pr$ score on the $\log_{2}(1+\text{LFQ})$
+      scale. Filled markers are quantified values; hollow markers
+      are non-detections (LFQ $= 0$; in the $Pr$ panel, replicates
+      with none of the four markers detected). Black bars are stage means.
+      In the $Pr$ panel, grey diamonds with error bars show the
+      mean $\pm$ s.d.\ of the distribution from which
+      per-trajectory $Pr$ values are drawn
+      (Section~\ref{sec:state}); at D11 this is the detection-floor
+      anchor $\mathcal{N}(0, \sigma_{\text{D11}}/2)$ rather than the
+      replicate mean. Stage is encoded by both x-position and
+      marker shape. $n = 3/2/2$ replicates.}}
+  \label{fig:replicates}
+\end{figure*}
+
 \subsubsection{Proteomics re-processing}
 Proteomic data were sourced from Novak et al.~\cite{novak2022single}
 (PRIDE accession \texttt{PXD028283}), comprising eight raw
@@ -744,25 +764,6 @@ probe described in Section~\ref{sec:loro}.
     \end{tabular}}
 \end{table*}
 
-\begin{figure*}[!htbp]
-  \centering
-  \includegraphics[width=0.90\linewidth]{images/fig_pr_replicates.png}
-  \caption{\rtag{R2.11}\textcolor{red}{%
-      \textbf{Individual proteomic CTRL replicates at each stage.}
-      Columns show the four $\mathcal{G}_{Pr}$ markers and the
-      replicate-level $Pr$ score on the $\log_{2}(1+\text{LFQ})$
-      scale. Filled markers are quantified values; hollow markers
-      are non-detections (LFQ $= 0$; in the $Pr$ panel, replicates
-      with none of the four markers detected). Black bars are stage means.
-      In the $Pr$ panel, grey diamonds with error bars show the
-      mean $\pm$ s.d.\ of the distribution from which
-      per-trajectory $Pr$ values are drawn
-      (Section~\ref{sec:state}); at D11 this is the detection-floor
-      anchor $\mathcal{N}(0, \sigma_{\text{D11}}/2)$ rather than the
-      replicate mean. Stage is encoded by both x-position and
-      marker shape. $n = 3/2/2$ replicates.}}
-  \label{fig:replicates}
-\end{figure*}
 
 As a methodological robustness check, an interim
 TH-abundance stratification was applied prior to receipt
